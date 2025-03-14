@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 
 use function Laravel\Prompts\password;
 
@@ -37,7 +38,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'phone' => $request->phone
         ]);
-        
+
 
        // dd(session()->all());
         return redirect()->route('users.index')->with('success', 'User created successfully!'); //for now to testing
@@ -48,7 +49,6 @@ class UserController extends Controller
     {
         return view('users.edit', compact('user'));
     }
-
 
     public function update(Request $request, User $user)
     {
@@ -64,13 +64,14 @@ class UserController extends Controller
             'password' => $request->password ? Hash::make($request->password) : $user->password,
             'phone' => $request->phone
         ]);
-        return redirect()->route('users.index')->with('success', 'User updated successfully!'); //for now to testing
+         return redirect()->route('users.index')->with('success', 'User updated successfully!'); //for now to testing
     }
 
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index'); //for now to testing
+         return redirect()->route('users.index'); //for now to testing
+
     }
 }
