@@ -50,10 +50,6 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function show(User $user){
-        return Response::json(['data'=>$user]);
-    }
-
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -68,8 +64,7 @@ class UserController extends Controller
             'password' => $request->password ? Hash::make($request->password) : $user->password,
             'phone' => $request->phone
         ]);
-        return Response::json(['message'=>'updated successfully']);
-        // return redirect()->route('users.index')->with('success', 'User updated successfully!'); //for now to testing
+         return redirect()->route('users.index')->with('success', 'User updated successfully!'); //for now to testing
     }
 
 
