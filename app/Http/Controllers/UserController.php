@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Database\QueryException;
 
 use function Laravel\Prompts\password;
 
@@ -51,21 +52,34 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name' => 'required | string | max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable | min:8 | confirmed',
-            'phone' => 'nullable | string | max:15'
-        ]);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'phone' => $request->phone
-        ]);
-         return redirect()->route('users.index')->with('success', 'User updated successfully!'); //for now to testing
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8|confirmed',
+        'phone' => 'nullable|string|max:15'
+    ]);
+
+    // Check if phone number is already in use
+    if ($request->phone && User::where('phone', $request->phone)->where('id', '!=', $user->id)->exists()) {
+        return redirect()->back()->withErrors(['phone' => 'Phone number is already taken.']);
     }
+
+    try {
+        
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $request->filled('password') ? Hash::make($validated['password']) : $user->password,
+            'phone' => $validated['phone']
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+
+    } catch (QueryException $e) {
+        return redirect()->back()->withErrors(['error' => 'Something went wrong! ' . $e->getMessage()]);
+    }
+}
 
 
     public function destroy(User $user)
