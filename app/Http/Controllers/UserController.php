@@ -30,19 +30,22 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
-            'phone' => 'nullable|string|max:15'
+            'phone' => 'nullable|string|max:15|unique:users,phone',
         ]);
-        //create
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => $request->phone
-        ]);
-
-
-       // dd(session()->all());
-        return redirect()->route('users.index')->with('success', 'User created successfully!'); //for now to testing
+        try {
+            // Create user
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'phone' => $request->phone
+            ]);
+    
+            return redirect()->route('users.index')->with('success', 'User created successfully!');
+    
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors(['error' => 'Something went wrong! ' . $e->getMessage()]);
+        }
     }
 
 
