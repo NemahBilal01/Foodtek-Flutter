@@ -1,0 +1,28 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\FoodItem;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\cartItem>
+ */
+class CartItemFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'user_id'=>User::factory(),
+            'food_item_id'=>FoodItem::inRandomOrder()->first()->id,
+            'quantity'=>fake()->numberBetween('1','10'),
+            'created_at'=>now(),
+        ];
+    }
+}
