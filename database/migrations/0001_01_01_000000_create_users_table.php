@@ -15,9 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('phone',15)->nullable()->unique();
+            $table->string('password');
+            $table->enum('role' , ['Admin' , 'Client' , 'Delivery']);
+            $table->string('profile_picture')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->date('birthday')->nullable();
+            $table->string('google_id')->nullable();
+            $table->string('facebook_id')->nullable();
+            $table->string('apple_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
