@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone',15)->nullable()->unique();
             $table->string('password');
-            $table->enum('role' , ['Admin' , 'Client' , 'Delivery']);
+            $table->enum('role', ['Admin', 'Client', 'Delivery'])->default('Client');
             $table->string('profile_picture')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->date('birthday')->nullable();
