@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DeliveryStatues;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,12 +17,17 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
+            RestaurantSeeder::class,
             CategorySeeder::class,
             FoodItemSeeder::class,
             CartItemSeeder::class,
             OrderSeeder::class,
             OrderItemSeeder::class,
-            NotificationSeeder::class
+            // NotificationSeeder::class,
+            AddressSeeder::class,
+            DeliveryStatuesSeeder::class,
+            DeliveryTrackingSeeder::class,
+
         ]);
 
         // FoodItem::factory(10);

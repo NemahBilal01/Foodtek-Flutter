@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('food_items', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('restaurant_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->text('description');
-            $table->decimal('price', 8, 2);
-            $table->string('image');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->string('image_path')->nullable();
             $table->boolean('is_available')->default(true);
             $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
         });
     }
 

@@ -19,10 +19,9 @@ class CartItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>User::factory(),
+            'user_id'=>User::inRandomOrder()->first()->id,
             'food_item_id'=>FoodItem::inRandomOrder()->first()->id,
             'quantity'=>fake()->numberBetween('1','10'),
-            'created_at'=>now(),
         ];
     }
 }
