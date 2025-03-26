@@ -6,25 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Payment extends Model
+class DeliveryStatues extends Model
 {
-
+    /** @use HasFactory<\Database\Factories\DeliveryStatuesFactory> */
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable =[
         'order_id',
-        'amount',
-        'payment_method',
         'status',
-        'transaction_id',
     ];
 
-    protected $casts = [
-        'amount' => 'decimal:2',
-    ];
-    
-    public function order():BelongsTo
-    {
+    public function order() {
         return $this->belongsTo(Order::class);
     }
 }

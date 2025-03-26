@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\FoodItem;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrderItem>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\deliveryTracking>
  */
-class OrderItemFactory extends Factory
+class DeliveryTrackingFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +19,9 @@ class OrderItemFactory extends Factory
     {
         return [
             'order_id'=>Order::inRandomOrder()->first()->id,
-            'food_item_id'=>FoodItem::inRandomOrder()->first()->id,
-            'quantity'=>fake()->numberBetween(1,10),
-            'price'=>fake()->randomFloat('2' , '1' , '50'),
-        ];
+            'latitude'=>fake()->latitude(),
+            'longitude'=>fake()->longitude(),
+            'last_updated_at'=>fake()->dateTime(),
+            ];
     }
 }

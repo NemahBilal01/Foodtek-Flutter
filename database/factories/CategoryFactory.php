@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class CategoryFactory extends Factory
         // $category=;
         return [
             'name' => fake()->unique()->randomElement(['Sandwiches', 'Burger', 'Pasta', 'Pizza', 'shawrma', 'waffle', 'cake']),
-            'created_at'=>now(),
+            'restaurant_id'=>Restaurant::inRandomOrder()->first()->id,
         ];
     }
 }

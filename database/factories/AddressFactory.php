@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\notification>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
  */
-class NotificationFactory extends Factory
+class AddressFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +19,10 @@ class NotificationFactory extends Factory
     {
         return [
             'user_id'=>User::inRandomOrder()->first()->id,
-            'message'=>fake()->sentence(),
-            'is_read'=>fake()->boolean(),
-            'read_at'=>now(),
-        ];
+            'address_line'=>fake()->streetAddress(),
+            'country'=>fake()->country(),
+            'state'=>fake()->country(),
+            'city'=>fake()->city(),
+            'zip_code'=>fake()->postcode(),        ];
     }
 }

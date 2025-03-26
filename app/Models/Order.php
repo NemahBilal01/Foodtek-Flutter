@@ -17,14 +17,33 @@ class Order extends Model
         'total_price',
         'payment_status',
     ];
+    protected $casts = [
+        'total_price' => 'decimal:2',
+    ];
+
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
     }
-    public function orderItems():HasMany{
+    public function items():HasMany{
         return $this->hasMany(OrderItem::class);
     }
 
-    public function payments():HasMany{
+    public function payment():HasMany{
         return $this->hasMany(Payment::class);
+    }
+
+    public function deliveryStatuses() {
+        return $this->hasMany(DeliveryStatues::class);
+
+    }
+    public function tracking()
+    {
+        return $this->hasMany(DeliveryTracking::class);
+        // One order → Many tracking updates
+    }
+
+    public function latestStatus()
+    {
+        return $this->hasOne(DeliveryStatues::class)->latestOfMany();
     }
 }
