@@ -19,7 +19,11 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-
+           'order_id' =>Order::inRandomOrder()->first()->id,
+            'amount' =>fake()->randomFloat(2, 10, 200),
+            'payment_method' =>fake()->randomElement(['card', 'cash', 'paypal']),
+            'status' =>fake()->randomElement(['pending', 'paid', 'failed']),
+            'transaction_id' =>fake()->uuid(),
         ];
     }
 }

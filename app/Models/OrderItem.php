@@ -16,6 +16,11 @@ class OrderItem extends Model
         'quantity',
         'price',
     ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
+    
     public function foodItem():BelongsTo
     {
         return $this->belongsTo(FoodItem::class);

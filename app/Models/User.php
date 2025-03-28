@@ -22,11 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
         'phone',
         'birthday',
         'profilePicture',
-        'address',
-    ];
+        'google_id',
+        'facebook_id',
+        'apple_id',
+            ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -64,5 +67,14 @@ class User extends Authenticatable
     public function cartItems():HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function restaurants():HasMany
+    {
+        return $this->hasMany(Restaurant::class);
+    }
+
+    public function addresses() {
+        return $this->hasMany(Address::class);
     }
 }

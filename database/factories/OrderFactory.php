@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'restaurant_id'=>Restaurant::inRandomOrder()->first()->id,
             'user_id'=>User::inRandomOrder()->first()->id,
             'status'=>fake()->randomElement(['pending', 'processing', 'completed', 'cancelled']),
             'total_price'=>fake()->randomFloat('2' , '1' , '100'),

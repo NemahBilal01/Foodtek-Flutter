@@ -17,8 +17,14 @@ class FoodItem extends Model
         'price',
         'image',
         'category_id',
+        'is_available'
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2',
+        'is_available' => 'boolean',
+    ];
+    
     public function cartItems():HasMany
     {
         return $this->hasMany(CartItem::class);

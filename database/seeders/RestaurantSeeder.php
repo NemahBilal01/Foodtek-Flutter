@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Notification;
+use App\Models\Restaurant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class NotificationSeeder extends Seeder
+class RestaurantSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Notification::factory(30)->create();
+        Restaurant::factory(15)->create();
     }
 }

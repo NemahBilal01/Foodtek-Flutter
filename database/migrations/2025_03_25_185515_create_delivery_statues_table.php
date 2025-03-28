@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('delivery_statuses', function (Blueprint $table) {
+        Schema::create('delivery_statues', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->enum('status', ['pending', 'dispatched', 'out_for_delivery', 'delivered'])->default('pending');
             $table->timestamps();
 
-            
+
         });
     }
 

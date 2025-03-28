@@ -28,6 +28,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('restaurants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
+            $table->string('name', 100);
+            $table->text('description')->nullable();
+            $table->string('logo_url')->nullable();
+            $table->time('opening_time')->nullable();
+            $table->time('closing_time')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -49,6 +61,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('restaurants');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

@@ -27,12 +27,13 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone'=>fake()->numerify('#########'),
-            'birthday'=>fake()->date(),
-            'profilePicture'=>fake()->imageUrl('650' , '450' , 'person'),
-            'address'=>fake()->address(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role'=>fake()->randomElement(['Admin', 'Client', 'Delivery']),
+            'profile_picture'=>fake()->imageUrl('650' , '450' , 'person'),
+            'email_verified_at' => now(),
+            'birthday'=>fake()->date(),
             'remember_token' => Str::random(10),
+            'created_at'=>now(),
         ];
     }
 

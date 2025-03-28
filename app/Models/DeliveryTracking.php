@@ -4,27 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Payment extends Model
+class DeliveryTracking extends Model
 {
-
+    /** @use HasFactory<\Database\Factories\DeliveryTrackingFactory> */
     use HasFactory;
 
     protected $fillable = [
         'order_id',
-        'amount',
-        'payment_method',
-        'status',
-        'transaction_id',
+        'latitude',
+        'longitude',
+        'last_updated_at'
+    ];
+    protected $casts = [
+        'last_updated_at' => 'datetime',
     ];
 
-    protected $casts = [
-        'amount' => 'decimal:2',
-    ];
-    
-    public function order():BelongsTo
-    {
+    public function order() {
         return $this->belongsTo(Order::class);
     }
 }
