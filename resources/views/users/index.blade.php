@@ -1,42 +1,47 @@
-<!-- resources/views/users/index.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Users List</title>
-</head>
-<body>
-    <h1>Users List</h1>
-    <a href="{{ route('users.create') }}">Create New User</a>
-    @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
+@extends('layouts.app')
+
+@section('content')
+@if (session('success'))
+    <p style="color: green;">{{ session('success') }}</p>
+@endif
+<div class="row">
+    <div class="col">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mb-4 d-inline">Users</h5>
+            <a  href="#" class="btn btn-outline-dark mb-4 text-center mx-5 mt-3">Create New</a>
+            <table class="table table-striped">
+            <thead>
                 <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach ($users as $user)
+                <tr>
+                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('users.edit', $user) }}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Edit</a>
                         <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button  class="btn btn-danger" type="submit"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
-    </table>
-</body>
-</html>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+@endsection

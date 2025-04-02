@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurant;
+use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RestaurantController extends Controller
+class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $restaurants = Restaurant::all();
-        return view('restaurants.index',compact('restaurants'));
+        $payments = Payment::all();
+        // dd($payments);
+        return view('payments.index',compact('payments'));
     }
 
     /**
