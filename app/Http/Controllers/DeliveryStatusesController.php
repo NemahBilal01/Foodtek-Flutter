@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurant;
+use App\Http\Controllers\Controller;
+use App\Models\DeliveryStatues;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RestaurantController extends Controller
+class DeliveryStatusesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $restaurants = Restaurant::all();
-        return view('restaurants.index',compact('restaurants'));
+        $deliveryStatuses = DeliveryStatues::all();
+        // dd($deliveryStatuses);
+        return view('deliveryStatuses.index',compact('deliveryStatuses'));
     }
 
     /**

@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurant;
+use App\Http\Controllers\Controller;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RestaurantController extends Controller
+class CartItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $restaurants = Restaurant::all();
-        return view('restaurants.index',compact('restaurants'));
+        $cartItems = CartItem::all();
+        return view('cartItems.index',compact('cartItems'));
     }
 
     /**
