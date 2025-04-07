@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5fd6cad63d29eb74d690d42de70ba795f766a571
 /.phpunit.cache
 /node_modules
 /public/build
@@ -22,6 +25,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+<<<<<<< HEAD
 =======
 # Miscellaneous
 *.class
@@ -69,3 +73,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 >>>>>>> 2b94293 (Initial commit to Mobile_Team branch)
+=======
+>>>>>>> 5fd6cad63d29eb74d690d42de70ba795f766a571
