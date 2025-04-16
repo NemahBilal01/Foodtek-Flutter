@@ -4,6 +4,8 @@ import 'package:firebasewithnotification/controller/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/applocal.dart';
+
 
 class HistoryScreen extends StatelessWidget {
   @override
@@ -14,13 +16,13 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: orderHistory.isEmpty
-          ? _buildEmptyState()
+          ? _buildEmptyState(context)
           : _buildOrderList(orderHistory),
     );
   }
 
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,12 +30,12 @@ class HistoryScreen extends StatelessWidget {
           Image.asset("images/Empty State.png", width: 282,height: 282,),
           SizedBox(height: 20),
           Text(
-            "History Empty",
+            getLang(context, "history_empty"),
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700,color: Color(0XFF111827)),
           ),
           SizedBox(height: 8),
           Text(
-            "You don’t have order any foods before",
+            getLang(context, "no_orders_before"),
             style: TextStyle(fontSize: 16, color: Color(0XFF6C7278),fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
@@ -58,7 +60,7 @@ class HistoryScreen extends StatelessWidget {
 
                 },
                 child: Text(
-                  'Load More..',
+                  getLang(context, "load_more"),
                   style: TextStyle(
                     color: Color(0XFF25AE4B),
                     fontSize: 14,
@@ -102,11 +104,11 @@ class HistoryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      firstItem != null ? firstItem['name'] : "Order #${index + 1}",
+                      firstItem != null ? firstItem['name'] : getLang(context, "order")+" #${index + 1}",
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black),
                     ),
                     Text(
-                      firstItem != null ? firstItem['restaurant'] : "Items: ${order['items'].length}",
+                      firstItem != null ? firstItem['restaurant'] : getLang(context, "items_count")+": ${order['items'].length}",
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0XFF3B3B3B)),
                     ),
                     SizedBox(height: 4),
@@ -150,7 +152,7 @@ class HistoryScreen extends StatelessWidget {
                           _reorder(context, order['items']);
                         },
                         child: Text(
-                          'Reorder',
+                          getLang(context, "reorder"),
                           style: TextStyle(
                             color: Color(0XFF25AE4B),
                             fontSize: 12,
@@ -178,7 +180,7 @@ class HistoryScreen extends StatelessWidget {
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Items added to cart"),
+        content: Text(getLang(context,  "items_added_to_cart")),
         backgroundColor: Color(0XFF25AE4B),
       ),
     );

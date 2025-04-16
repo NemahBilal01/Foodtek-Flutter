@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
 
+import '../../components/applocal.dart';
+
 class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,12 @@ class FavoriteScreen extends StatelessWidget {
             favoriteProvider.favoritePizzas.where((pizza) {
               final category =
                   pizza['category']?.toString().toLowerCase() ?? '';
-              return !['all', 'burger', 'pizza', 'sandwich'].contains(category);
+              return ![
+                getLang(context, "all").toLowerCase(),
+                getLang(context, "burger").toLowerCase(),
+                getLang(context, "pizza").toLowerCase(),
+                getLang(context, "sandwich").toLowerCase()
+              ].contains(category);
             }).toList();
 
         return CommonLayoutWithoutfilterclips(
@@ -25,7 +32,7 @@ class FavoriteScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                 child: Text(
-                  "Favorites",
+                  getLang(context, "favorites"),
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
@@ -48,7 +55,7 @@ class FavoriteScreen extends StatelessWidget {
                       favoritePizzas.isEmpty
                           ? Center(
                             child: Text(
-                              "No favorite items yet!",
+                              getLang(context, "no_favorite_items_yet"),
                               style: GoogleFonts.sora(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -130,7 +137,7 @@ class FavoriteScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$${pizza['price']}',
+                    getLang(context, "price_label") + '\$${pizza['price']}',
                     style: GoogleFonts.sora(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -146,7 +153,7 @@ class FavoriteScreen extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      'Order Now',
+                      getLang(context, 'order_now'),
                       style: GoogleFonts.sora(
                         fontSize: 10,
                         fontWeight: FontWeight.w400,
@@ -206,14 +213,14 @@ void _showRemoveDialog(
     builder:
         (context) => GestureDetector(
           onTap: () => Navigator.pop(context),
-          // عند الضغط خارج النافذة يتم الإغلاق
+
           child: Stack(
             children: [
-              // إضافة تأثير الضبابية مع تسجيل النقرات للإغلاق
+
               Positioned.fill(
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  // عند الضغط خارج النافذة يتم الإغلاق
+
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                     child: Container(color: Colors.black.withOpacity(0.65)),
@@ -231,7 +238,7 @@ void _showRemoveDialog(
                     height: 44,
                     child: Center(
                       child: Text(
-                        "Are you sure you want to remove it from favorites?",
+                        getLang(context, 'remove_from_favorites'),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
                           fontSize: 12,
@@ -271,7 +278,7 @@ void _showRemoveDialog(
                             ),
                           ),
                           child: Text(
-                            "Yes",
+                            getLang(context, "yes"),
                             style: GoogleFonts.sora(
                               fontSize: 14,
                               color: Colors.white,

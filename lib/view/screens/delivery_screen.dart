@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'food_selection_screen.dart';
 import 'location_screen.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
+
 
 class DeliveryScreen extends StatelessWidget {
   const DeliveryScreen({super.key});
@@ -49,7 +51,7 @@ class DeliveryScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Get Delivery On Time',
+                          getLang(context, "get delivery on time"),
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -58,7 +60,8 @@ class DeliveryScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Order Your Favourite Food Within The Palm Of Your Hand And The Zone Of Your Comfort',
+                          getLang(context, "order your favourite food"),
+
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -94,7 +97,7 @@ class DeliveryScreen extends StatelessWidget {
                         height: 48,
                         alignment: Alignment.center,
                         child: Text(
-                          'Continue',
+                          getLang(context, "continue"),
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -122,7 +125,7 @@ class DeliveryScreen extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            "Skip",
+                            getLang(context, "skip"),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,

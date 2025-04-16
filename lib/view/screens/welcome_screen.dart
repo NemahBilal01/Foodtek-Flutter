@@ -1,7 +1,8 @@
 import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
 import 'package:firebasewithnotification/view/screens/location_section1.dart';
-import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
+
 
 
 class WelcomeScreen extends StatelessWidget {
@@ -50,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Welcome To Sahlah',
+                          getLang(context, "welcome_to_sahlah"),
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -59,7 +60,7 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Enjoy A Fast And Smooth Food Delivery At Your Doorstep',
+                          getLang(context, "Enjoy _ A Fast And Smooth Food Delivery _ At Your Doorstep"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -94,8 +95,9 @@ class WelcomeScreen extends StatelessWidget {
                         width: 307,
                         height: 48,
                         alignment: Alignment.center,
-                        child: Text(
-                          'Continue',
+                        child:
+                        Text(
+                          getLang(context, "continue"),
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -123,7 +125,7 @@ class WelcomeScreen extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            "Skip",
+                            getLang(context, "skip"),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,

@@ -1,6 +1,8 @@
 import 'package:firebasewithnotification/view/screens/location_section1.dart';
 import 'package:flutter/material.dart';
 import 'location_screen.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
+
 
 class FoodSelectionScreen extends StatelessWidget {
   const FoodSelectionScreen({super.key});
@@ -48,7 +50,7 @@ class FoodSelectionScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Choose Your Food',
+                          getLang(context, "choose your food"),
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -57,7 +59,7 @@ class FoodSelectionScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Order Your Favourite Food Within The Palm Of Your Hand And The Zone Of Your Comfort',
+                          getLang(context, "order your favourite food"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -93,7 +95,7 @@ class FoodSelectionScreen extends StatelessWidget {
                         height: 48,
                         alignment: Alignment.center,
                         child: Text(
-                          'Continue',
+                          getLang(context, "continue"),
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -121,7 +123,7 @@ class FoodSelectionScreen extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            "Skip",
+                            getLang(context, "skip"),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,

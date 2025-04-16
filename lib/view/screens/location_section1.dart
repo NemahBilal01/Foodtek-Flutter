@@ -2,6 +2,8 @@ import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
+
 class LocationSection extends StatelessWidget {
   const LocationSection({super.key});
 
@@ -44,7 +46,7 @@ class LocationSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Turn On Your Location',
+                      getLang(context, "turn on your location"),
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -53,7 +55,7 @@ class LocationSection extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "To Continues,Let Your Device Turn On Location,Which Uses Google's Location Service",
+                          getLang(context, "to continues location"),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -100,7 +102,7 @@ class LocationSection extends StatelessWidget {
                       padding: EdgeInsets.only(top: 14,bottom: 14),
                       alignment: Alignment.center,
                       child: Text(
-                        'Yes, Turn It On',
+                        getLang(context, "yes,turn it on"),
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -130,7 +132,7 @@ class LocationSection extends StatelessWidget {
                     backgroundColor: Color(0XFFC2C2C2),
                   ),
                   child: Text(
-                    'Cancel',
+                    getLang(context, "cancel"),
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0XFFFFFFFF),

@@ -5,6 +5,8 @@ import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/profile2_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/applocal.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -13,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
     return BottomNavBarOnly(
       appBar: AppBar(
         title: Text(
-          "Profile",
+          getLang(context, "profile"),
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -71,10 +73,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16),
-                _buildContainer("My Account", [
+                _buildContainer(getLang(context, "my_account"), [
                   _buildListTile(
                     Icons.person_add_alt_outlined,
-                    "Personal information",
+                    getLang(context, "personal_info"),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -84,37 +86,37 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   _buildListTile(
                     Icons.language,
-                    "Language",
+                    getLang(context, "language"),
                     trailing: Text("عربيه"),
                   ),
-                  _buildListTile(Icons.privacy_tip_outlined, "Privacy Policy"),
-                  _buildListTile(Icons.settings_outlined, "Setting"),
+                  _buildListTile(Icons.privacy_tip_outlined, getLang(context, "privacy_policy")),
+                  _buildListTile(Icons.settings_outlined, getLang(context, "setting")),
                 ]),
                 SizedBox(height: 16),
-                _buildContainer("Notifications", [
+                _buildContainer(getLang(context, "notifications"), [
                   _buildListTile(
                     Icons.notifications_none,
-                    "Push Notifications",
+                    getLang(context, "push_notifications"),
                     trailing: Switch(value: true, onChanged: (val) {}),
                   ),
                   _buildListTile(
                     Icons.notifications_none,
-                    "Promotional Notifications",
+                    getLang(context, "promo_notifications"),
                     trailing: Switch(value: false, onChanged: (val) {}),
                   ),
                 ]),
                 SizedBox(height: 16),
-                _buildContainer("More", [
-                  _buildListTile(Icons.help_outline, "Help Center"),
+                _buildContainer(getLang(context, "more"), [
+                  _buildListTile(Icons.help_outline, getLang(context, "help_center")),
                   _buildListTile(
                     Icons.logout,
-                    "Log Out",
+                    getLang(context, "logout"),
                     textColor: Color(0xFFDC1010),
                     iconColor: Color(0xFFDC1010),
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Login()), // غيّر LogoutScreen حسب اسم الشاشة عندك
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                   ),

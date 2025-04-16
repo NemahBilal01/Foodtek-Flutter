@@ -1,8 +1,10 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/checkout_screen.dart';
 import 'package:firebasewithnotification/view/widget/common_layout_bottomnavbaronly.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../components/applocal.dart';
 
 
 class LocationScreen extends StatefulWidget {
@@ -17,7 +19,7 @@ class _LocationScreenState extends State<LocationScreen> {
   final LatLng targetLocation = LatLng(31.963158, 35.934305);
   final LatLng courierLocation = LatLng(31.9628, 35.9340);
 
-  String address = "123 Al-Madina Street, Abdali, Amman, Jordan";
+  String address = "";
 
   Set<Marker> _markers = {};
   Set<Circle> _circles = {};
@@ -26,6 +28,11 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        address = getLang(context, "123 al-madina Street, Abdali, Amman, Jordan");
+      });
+    });
 
     final dashedPoints = _generateDashedPath(
       courierLocation,
@@ -34,7 +41,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
     _polylines.add(
       Polyline(
-        polylineId: PolylineId("dashed_line"),
+        polylineId: PolylineId(getLang(context, "dashed_line")),
         points: dashedPoints,
         width: 3,
         color: Colors.green,
@@ -60,16 +67,16 @@ class _LocationScreenState extends State<LocationScreen> {
     setState(() {
       _markers.addAll({
         Marker(
-          markerId: MarkerId('courier'),
+          markerId: MarkerId(getLang(context, "Courier")),
           position: courierLocation,
           icon: courierIcon,
-          infoWindow: InfoWindow(title: "Driver"),
+          infoWindow: InfoWindow(title: getLang(context, "driver")),
         ),
         Marker(
           markerId: MarkerId('target'),
           position: targetLocation,
           icon: targetIcon,
-          infoWindow: InfoWindow(title: "Destination"),
+          infoWindow: InfoWindow(title: getLang(context, "destination")),
         ),
       });
     });
@@ -144,7 +151,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Find your location',
+                      hintText: getLang(context, "find your location"),
                       hintStyle: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -191,7 +198,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "your location",
+                      getLang(context, "your location"),
                       style: TextStyle(
                         color: Color(0xFF878787),
                         fontSize: 12,
@@ -237,7 +244,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                           ),
                           child: Text(
-                            'Set Location',
+                            getLang(context, "set Location"),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,

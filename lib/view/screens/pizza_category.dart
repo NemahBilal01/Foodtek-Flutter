@@ -4,46 +4,48 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' ;
 
+import '../../components/applocal.dart';
+
 
 class PizzaCategory extends StatelessWidget {
-  final List<Map<String, dynamic>> pizzas = [
-    {
-      'name': 'Pepperoni Pizza',
-      'description': 'Pepperoni pizza, Margarita Pizza Margherita Italian cuisine Tomato',
-      'price': 29,
-      'image': 'images/margarita-pizza.png',
-    },
-    {
-      'name': 'Pizza Cheese',
-      'description': 'Food pizza dish cuisine junk food, Fast Food, Flatbread, Ingredient',
-      'price': 23,
-      'image': 'images/Pizza_Cheese.png',
-    },
-    {
-      'name': 'Peppy Paneer',
-      'description': 'Chunky paneer with crisp capsicum and spicy red pepper',
-      'price': 13,
-      'image': 'images/Peppy_Paneer.png',
-    },
-    {
-      'name': 'Mexican Green Wave',
-      'description': 'A pizza loaded with crunchy onions, crisp capsicum, juicy tomatoes',
-      'price': 23,
-      'image': 'images/Mexican_Green_Wave.png',
-    },
-  ];
-
   final String categoryName;
 
   PizzaCategory({super.key, required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> pizzas = [
+      {
+        'name': getLang(context, "pepperoni_pizza_name"),
+        'description': getLang(context, "pepperoni_pizza_desc"),
+        'price': 29,
+        'image': 'images/margarita-pizza.png',
+      },
+      {
+        'name': getLang(context, "pizza_cheese_name"),
+        'description': getLang(context, "pizza_cheese_desc"),
+        'price': 23,
+        'image': 'images/Pizza_Cheese.png',
+      },
+      {
+        'name': getLang(context, "peppy_paneer_name"),
+        'description': getLang(context, "peppy_paneer_desc"),
+        'price': 13,
+        'image': 'images/Peppy_Paneer.png',
+      },
+      {
+        'name': getLang(context, "mexican_green_wave_name"),
+        'description': getLang(context, "mexican_green_wave_desc"),
+        'price': 23,
+        'image': 'images/Mexican_Green_Wave.png',
+      },
+    ];
+
     return CommonLayout(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
@@ -78,11 +80,11 @@ class PizzaCategory extends StatelessWidget {
             Container(
               width: 177,
               height: 200,
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 8,
@@ -94,14 +96,14 @@ class PizzaCategory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Text(
                     pizza['name'],
                     textAlign: TextAlign.center,
                     style: GoogleFonts.sora(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF24262F),
+                      color: const Color(0xFF24262F),
                     ),
                   ),
                   Text(
@@ -110,7 +112,7 @@ class PizzaCategory extends StatelessWidget {
                     style: GoogleFonts.sora(
                       fontSize: 10,
                       fontWeight: FontWeight.w300,
-                      color: Color(0xFF969AB0),
+                      color: const Color(0xFF969AB0),
                     ),
                   ),
                   Text(
@@ -118,19 +120,19 @@ class PizzaCategory extends StatelessWidget {
                     style: GoogleFonts.sora(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF24262F),
+                      color: const Color(0xFF24262F),
                     ),
                   ),
                   Container(
                     width: 95,
                     height: 27,
                     decoration: BoxDecoration(
-                      color: Color(0xFF25AE4B),
+                      color: const Color(0xFF25AE4B),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      'Order Now',
+                      getLang(context, "order_now"),
                       style: GoogleFonts.sora(
                         fontSize: 10,
                         fontWeight: FontWeight.w400,
@@ -141,7 +143,6 @@ class PizzaCategory extends StatelessWidget {
                 ],
               ),
             ),
-
             Positioned(
               top: -40,
               left: 50,
@@ -150,7 +151,6 @@ class PizzaCategory extends StatelessWidget {
                 backgroundImage: AssetImage(pizza['image']),
               ),
             ),
-
             Positioned(
               top: -10,
               right: 10,
@@ -162,13 +162,13 @@ class PizzaCategory extends StatelessWidget {
                   width: 35,
                   height: 35,
                   decoration: BoxDecoration(
-                    color: Color(0xFFDBF4D1),
+                    color: const Color(0xFFDBF4D1),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Icon(
                     isFav ? Icons.favorite : Icons.favorite_border,
                     size: 20,
-                    color: isFav ? Colors.red : Color(0xFF222628),
+                    color: isFav ? Colors.red : const Color(0xFF222628),
                   ),
                 ),
               ),

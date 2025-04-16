@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +35,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
             isUpdating = true;
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Password updated successfully!")),
+            SnackBar(content: Text(getLang(context, "password updated successfully!"))),
           );
           Navigator.pushReplacement(
             context,
@@ -111,7 +111,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                       ),
                       SizedBox(height: 50),
                       Text(
-                        "Congratulations!",
+                        getLang(context, "congratulations!"),
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w700,
@@ -120,7 +120,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        "Password reset successfully",
+                        getLang(context, "password reset successfully"),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w400,
@@ -165,7 +165,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "Reset Password",
+                                  getLang(context, "reset Password"),
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
@@ -179,7 +179,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Want to try with my current password?",
+                                       getLang(context, "want to try with my current password?"),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Color(0XFF6C7278),
@@ -200,7 +200,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                         );
                                       },
                                       child: Text(
-                                        "Login",
+                                        getLang(context, "login"),
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600,
@@ -220,7 +220,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                         decoration: InputDecoration(
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
-                                          labelText: 'New Password',
+                                          labelText: getLang(context, "new Password"),
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -244,10 +244,10 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please enter a new password';
+                                            return getLang(context, "please enter a new password");
                                           }
                                           if (value.length < 8) {
-                                            return 'Password must be at least 8 characters';
+                                            return getLang(context, "password must be at least 8 characters");
                                           }
                                           if (!RegExp(r'(?=.*[A-Z])')
                                               .hasMatch(value)) {
@@ -255,15 +255,15 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                           }
                                           if (!RegExp(r'(?=.*[a-z])')
                                               .hasMatch(value)) {
-                                            return 'Must contain at least one lowercase letter';
+                                            return getLang(context, "must contain at least one uppercase letter");
                                           }
                                           if (!RegExp(r'(?=.*\d)')
                                               .hasMatch(value)) {
-                                            return 'Must contain at least one number';
+                                            return getLang(context, "must contain at least one number");
                                           }
                                           if (!RegExp(r'(?=.*[@$!%*?&])')
                                               .hasMatch(value)) {
-                                            return 'Must contain at least one special character';
+                                            return getLang(context, "must contain at least one special character");
                                           }
                                           return null;
                                         },
@@ -273,7 +273,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                         controller: confirmPasswordController,
                                         obscureText: _obscureText,
                                         decoration: InputDecoration(
-                                          labelText: 'Confirm New Password',
+                                          labelText: getLang(context, "confirm New Password"),
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
                                           border: OutlineInputBorder(
@@ -300,11 +300,11 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please confirm your password';
+                                            return getLang(context, "please confirm your password");
                                           }
                                           if (value !=
                                               newPasswordController.text) {
-                                            return 'Passwords do not match';
+                                            return getLang(context,  "passwords do not match");
                                           }
                                           return null;
                                         },
@@ -328,7 +328,7 @@ class _RestSuccessScreenState extends State<RestSuccessScreen> {
                                             }
                                           },
                                           child: Text(
-                                            'Update Password',
+                                            getLang(context, "update Password"),
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: 14,

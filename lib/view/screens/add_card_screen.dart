@@ -2,6 +2,8 @@ import 'package:firebasewithnotification/view/screens/order_success_screen.dart'
 import 'package:firebasewithnotification/view/widget/common_layoutWithBottomNav.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/applocal.dart';
+
 
 class AddCardScreen extends StatelessWidget {
   @override
@@ -13,9 +15,9 @@ class AddCardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Add Card",
-                style: TextStyle(
+              Text(
+                getLang(context, "add_card"),
+                style: const TextStyle(
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
@@ -25,16 +27,16 @@ class AddCardScreen extends StatelessWidget {
               const SizedBox(height: 25),
               Center(child: Image.asset('images/Group.png', width: 365)),
               const SizedBox(height: 18),
-              buildTextField("Name"),
+              buildTextField(context,getLang(context, "name")),
               const SizedBox(height: 16),
-              buildTextField("Card Number", hasIcon: true),
+              buildTextField(context,getLang(context, "card_number"), hasIcon: true),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildTextField("Expiry", width: 150),
-                    buildTextField("CVC", width: 150),
+                    buildTextField(context,getLang(context, "expiry"), width: 150),
+                    buildTextField(context,getLang(context, "cvc"), width: 150),
                   ],
                 ),
               ),
@@ -47,7 +49,7 @@ class AddCardScreen extends StatelessWidget {
                       width: 233,
                       height: 34,
                       child: Text(
-                        "We will send you an order details to your email after the successful payment",
+                        getLang(context, "order_details_email"),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: "SF Pro Display",
@@ -98,9 +100,9 @@ class AddCardScreen extends StatelessWidget {
                             children: [
                               Icon(Icons.lock_outline, color: Colors.white),
                               const SizedBox(width: 10),
-                              const Text(
-                                'Pay for the order',
-                                style: TextStyle(
+                              Text(
+                                getLang(context, "pay_for_order"),
+                                style: const TextStyle(
                                   fontFamily: 'SF Pro Display',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
@@ -125,10 +127,11 @@ class AddCardScreen extends StatelessWidget {
   }
 
   Widget buildTextField(
-    String label, {
-    bool hasIcon = false,
-    double width = 385,
-  }) {
+      BuildContext context,
+      String label, {
+        bool hasIcon = false,
+        double width = 385,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -154,19 +157,18 @@ class AddCardScreen extends StatelessWidget {
           ),
           child: TextField(
             keyboardType:
-                label == "Card Number" || label == "CVC"
-                    ? TextInputType.number
-                    : TextInputType.text,
+            label == getLang(context, "card_number") || label == getLang(context, "cvc")
+                ? TextInputType.number
+                : TextInputType.text,
             decoration: InputDecoration(
               border: InputBorder.none,
-              suffixIcon:
-                  hasIcon
-                      ? Image.asset(
-                        'images/shopping_15402438 1.png',
-                        width: 38,
-                        height: 38,
-                      )
-                      : null,
+              suffixIcon: hasIcon
+                  ? Image.asset(
+                'images/shopping_15402438 1.png',
+                width: 38,
+                height: 38,
+              )
+                  : null,
             ),
             style: const TextStyle(
               fontFamily: 'Inter',
@@ -181,3 +183,4 @@ class AddCardScreen extends StatelessWidget {
     );
   }
 }
+

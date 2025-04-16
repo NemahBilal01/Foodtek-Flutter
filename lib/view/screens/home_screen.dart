@@ -4,6 +4,8 @@ import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:firebasewithnotification/view/screens/pizza_category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
+//import 'package:path/path.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +16,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  String selectedFilter = "All";
+  late String selectedFilter = '';
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        selectedFilter = getLang(context, "all");
+      });
+    });
+  }
+
 
   void _onItemTapped(int index) {
     if (index == 1) {
@@ -24,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
   }
+
 
   void _updateFilter(String filter) {
     setState(() {
@@ -64,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "Current location",
+                     getLang(context, "current location"),
                       style: TextStyle(color: Color(0xFF606060), fontSize: 12),
                     ),
                     Icon(
@@ -137,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.w400,
                 ),
                 decoration: InputDecoration(
-                  hintText: "Search menu, restaurant or etc",
+                  hintText: getLang(context, "search menu, restaurant or etc"),
                   hintStyle: GoogleFonts.inter(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -161,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   _buildFilterChip(
-                    "All",
+                    getLang(context, "all"),
                     "",
                     selectedFilter,
                     _updateFilter,
@@ -169,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: 12),
                   _buildFilterChip(
-                    "Burger",
+                    getLang(context, "burger"),
                     "images/burger.png",
                     selectedFilter,
                     _updateFilter,
@@ -177,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: 12),
                   _buildFilterChip(
-                    "Pizza",
+                   getLang(context, "pizza"),
                     "images/pizzaa.png",
                     selectedFilter,
                     _updateFilter,
@@ -185,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: 12),
                   _buildFilterChip(
-                    "Sandwich",
+                  getLang(context, "sandwich"),
                     "images/sandwich.png",
                     selectedFilter,
                     _updateFilter,
@@ -216,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 38,
                     alignment: Alignment.center,
                     child: Text(
-                      "Experience our delicious new dish",
+                      getLang(context, "experience_new_dish"),
                       style: GoogleFonts.inter(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -235,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 29,
                     alignment: Alignment.center,
                     child: Text(
-                      "30% OFF",
+                      getLang(context, "discount_30"),
                       style: GoogleFonts.leagueSpartan(
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
@@ -271,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Text(
-                  "Top Rated",
+                  getLang(context, "top_rated"),
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
@@ -293,24 +308,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   _buildProductCard(
                     context,
-                    "Chicken burger",
-                    "100 gr chicken + tomato + cheese + Lettuce",
+                    getLang(context, "chicken_burger"),
+                    getLang(context, "chicken_burger_desc"),
                     "\$20.00",
                     "images/chicken burger.png",
                     3.8,
                   ),
                   _buildProductCard(
                     context,
-                    "Cheese burger",
-                    "100 gr meat + onion + tomato + Lettuce cheese",
+                    getLang(context, "cheese_burger"),
+                    getLang(context,  "cheese_burger_desc"),
                     "\$15.00",
                     "images/chese burger.png",
                     4.5,
                   ),
                   _buildProductCard(
                     context,
-                    "Chicken burger",
-                    "100 gr chicken tomato +cheese",
+                    getLang(context, "chicken_burger_alt"),
+                    getLang(context, "chicken_burger_alt_desc"),
                     "\$18.00",
                     "images/chicken.png",
                     3.8,
@@ -326,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Recommend",
+                    getLang(context,  "recommend"),
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -337,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "View All",
+                        getLang(context,  "view_all"),
                         style: TextStyle(
                           color: Color(0xFF25AE4B),
                           fontSize: 12,
@@ -391,11 +406,11 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: "Home",
+            label: getLang(context, "home"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
-            label: "Favorites",
+            label: getLang(context, "favorites"),
           ),
           BottomNavigationBarItem(
             icon: Container(
@@ -410,11 +425,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time),
-            label: "History",
+            label: getLang(context, "history"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: "Profile",
+            label: getLang(context, "profile"),
           ),
         ],
       ),
@@ -548,7 +563,7 @@ Widget _buildFilterChip(
   return GestureDetector(
     onTap: () {
       onFilterSelected(label);
-      if (label == "Pizza") {
+      if (label == getLang(context, "pizza")) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -569,7 +584,7 @@ Widget _buildFilterChip(
       ),
       child: Row(
         children: [
-          if (label != "All") ...[
+          if (label != getLang(context, "all")) ...[
             Image.asset(imagePath, width: 24, height: 24),
             SizedBox(width: 12),
           ] else
@@ -630,93 +645,96 @@ class NotificationItem {
   });
 }
 
-List<NotificationItem> _allNotifications = [
-  NotificationItem(
-    title: "Delayed Order:",
-    message:
-        "We’re sorry! Your order is running late. New ETA: 10:30 PM. Thanks for your patience!",
-    date: "Last Wednesday at 9:42 AM",
-    isRead: false,
-  ),
-  NotificationItem(
-    title: "Promotional Offer",
-    message:
-        "Craving something delicious? 🍔 Get 20% off on your next order. Use code: YUMMY20.",
-    date: "Last Wednesday at 9:42 AM",
-    isRead: true,
-  ),
-  NotificationItem(
-    title: "Out for Delivery:",
-    message:
-        "Your order is on the way! 🚗 Estimated arrival: 15 mins. Stay hungry!",
-    date: "Last Wednesday at 9:42 AM",
-    isRead: false,
-  ),
-  NotificationItem(
-    title: "Order Confirmation:",
-    message:
-        "Your order has been placed! 🍔 We're preparing it now. Track your order live!",
-    date: "Last Wednesday at 9:42 AM",
-    isRead: true,
-  ),
-  NotificationItem(
-    title: "Delivered:",
-    message:
-        "Enjoy your meal! 🍕 Your order has been delivered. Rate your experience!",
-    date: "",
-    isRead: true,
-  ),
-];
+List<NotificationItem> _buildAllNotifications(BuildContext context) {
+  return [
+    NotificationItem(
+      title: getLang(context, "delayed_order"),
+      message: getLang(context, "delayed_order_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: false,
+    ),
+    NotificationItem(
+      title: getLang(context, "promotional_offer"),
+      message: getLang(context, "promotional_offer_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: true,
+    ),
+    NotificationItem(
+      title: getLang(context, "out_for_delivery"),
+      message: getLang(context, "out_for_delivery_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: false,
+    ),
+    NotificationItem(
+      title: getLang(context, "order_confirmation"),
+      message: getLang(context, "order_confirmation_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: true,
+    ),
+    NotificationItem(
+      title: getLang(context, "delivered"),
+      message: getLang(context, "delivered_msg"),
+      date: "",
+      isRead: true,
+    ),
+  ];
+}
 
 Widget _buildNotificationsList(ScrollController scrollController) {
-  return DefaultTabController(
-    length: 3,
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Notifications",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(height: 16),
-          TabBar(
-            labelColor: Colors.green,
-            unselectedLabelColor: Colors.black,
-            indicatorColor: Colors.green,
-            indicatorWeight: 3,
-            tabs: [
-              Tab(text: "All"),
-              Tab(text: "Unread"),
-              Tab(text: "Read"),
-            ],
-          ),
-          SizedBox(height: 16),
-          Expanded(
-            child: TabBarView(
-              children: [
-                _buildNotificationListByType("all"),
-                _buildNotificationListByType("unread"),
-                _buildNotificationListByType("read"),
+  return Builder(
+    builder: (context) => DefaultTabController(
+      length: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              getLang(context, "notifications"),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 16),
+            TabBar(
+              labelColor: Colors.green,
+              unselectedLabelColor: Colors.black,
+              indicatorColor: Colors.green,
+              indicatorWeight: 3,
+              tabs: [
+                Tab(text: getLang(context, "all")),
+                Tab(text: getLang(context, "unread")),
+                Tab(text: getLang(context, "read")),
               ],
             ),
-          ),
-        ],
+            SizedBox(height: 16),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _buildNotificationListByType(context, "all"),
+                  _buildNotificationListByType(context, "unread"),
+                  _buildNotificationListByType(context, "read"),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
 }
 
-Widget _buildNotificationListByType(String type) {
+Widget _buildNotificationListByType(BuildContext context, String type) {
+  List<NotificationItem> allNotifications = _buildAllNotifications(context);
+
   List<NotificationItem> filteredNotifications;
 
   if (type == "unread") {
-    filteredNotifications = _allNotifications.where((n) => !n.isRead).toList();
+    filteredNotifications =
+        allNotifications.where((n) => !n.isRead).toList();
   } else if (type == "read") {
-    filteredNotifications = _allNotifications.where((n) => n.isRead).toList();
+    filteredNotifications =
+        allNotifications.where((n) => n.isRead).toList();
   } else {
-    filteredNotifications = _allNotifications;
+    filteredNotifications = allNotifications;
   }
 
   return ListView.builder(
@@ -729,6 +747,7 @@ Widget _buildNotificationListByType(String type) {
         notification.date,
       );
     },
+    controller: ScrollController(),
   );
 }
 
@@ -751,3 +770,4 @@ Widget _buildNotificationItem(String title, String message, String date) {
     ),
   );
 }
+

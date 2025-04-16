@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/verify_code_screen.dart';
-
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           email: emailController.text.trim(),
         );
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Password reset email sent!")),
+          SnackBar(content: Text(getLang(context,  "password reset email sent!"))),
         );
         Navigator.push(
           context,
@@ -95,7 +96,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       icon: Icon(Icons.arrow_back, color: Colors.black),
                     ),
                     Text(
-                      "Back to ",
+                      getLang(context, "back to"),
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                     TextButton(
@@ -106,7 +107,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         );
                       },
                       child: Text(
-                        "Login",
+                        getLang(context, "login"),
                         style: TextStyle(
                             fontSize: 14,
                             color: Color(0XFF25AE4B),
@@ -114,19 +115,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     Text(
-                      " page?",
+                      getLang(context, "page"),
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Rest Password',
+                  getLang(context, "reset Password"),
                   style: TextStyle(fontSize: 32, color: Color(0XFF111827)),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "Enter your E-mail or phone and we'll send you a link to get back into your account",
+                  getLang(context, "enter your E-mail or phone and we'll send you a link to get back into your account"),
                   style: TextStyle(fontSize: 12, color: Color(0XFF6C7278)),
                   maxLines: 3,
                   softWrap: true,
@@ -138,17 +139,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: getLang(context, "login"),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return getLang(context, "please enter your email");
                       } else if (!RegExp(
                           r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
                           .hasMatch(value)) {
-                        return 'Enter a valid email address';
+                        return getLang(context, "enter a valid email address");
                       }
                       return null;
                     },
@@ -170,7 +171,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     }
                   },
                   child: Text(
-                    'Send',
+                    getLang(context, "send"),
                     style: TextStyle(fontSize: 14, color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(

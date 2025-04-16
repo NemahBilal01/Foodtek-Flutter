@@ -2,6 +2,7 @@
 import 'package:firebasewithnotification/view/screens/rest_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   const VerifyCodeScreen({super.key});
@@ -70,7 +71,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   width: 295,
                   height: 34,
                   child: Text(
-                    'A 4-digit code has been sent to your email. Please enter it to verify.',
+                    getLang(context, "a 4-digit code has been sent to your email. Please enter it to verify."),
                     style: TextStyle(fontSize: 12, color: Color(0XFF6C7278)),
                   ),
                 ),

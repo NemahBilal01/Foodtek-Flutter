@@ -7,6 +7,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../components/applocal.dart';
+
 class DeliveryHeroPage extends StatefulWidget {
   @override
   _DeliveryHeroPageState createState() => _DeliveryHeroPageState();
@@ -52,7 +54,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Find your location',
+                      hintText: getLang(context, "find_your_location"),
                       hintStyle: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -116,7 +118,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'On The Way',
+            getLang(context, "on_the_way"),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -131,7 +133,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                     );
                   },
                   child: Text(
-                    'All Details',
+                    getLang(context, "all_details"),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -149,7 +151,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                 Column(
                   children: [
                     Text(
-                      'Order Placed',
+                      getLang(context, "order_placed"),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -163,7 +165,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                 Column(
                   children: [
                     Text(
-                      'On The Way',
+                      getLang(context, "on_the_way"),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -181,7 +183,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                 Column(
                   children: [
                     Text(
-                      'Delivered',
+                      getLang(context, "delivered"),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -207,7 +209,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Your Delivery Hero',
+                        getLang(context,  "your_delivery_hero"),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -215,7 +217,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                         ),
                       ),
                       Text(
-                        'Aleksandr V.',
+                        getLang(context, "aleksandr V."),
                         style: TextStyle(
                           fontSize: 15,
                           color: Color(0XFF2F2E36),
@@ -262,7 +264,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Your Location',
+                  getLang(context, "your location"),
                   style: TextStyle(
                     fontSize: 12,
                     color: Color(0XFF878787),
@@ -274,7 +276,7 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                   children: [
                     Icon(Icons.location_on_outlined),
                     Text(
-                      '123 Al-Madina Street, Abdali, Amman, Jordan',
+                      getLang(context, "123 al-madina Street, Abdali, Amman, Jordan"),
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(0XFF6C7278),
@@ -297,19 +299,19 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
         markerId: MarkerId('home'),
         position: _routeCoordinates[0],
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        infoWindow: InfoWindow(title: 'Home'),
+        infoWindow: InfoWindow(title: getLang(context, "home")),
       ),
       Marker(
         markerId: MarkerId('car_start'),
         position: _routeCoordinates[1],
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(title: 'Car Start'),
+        infoWindow: InfoWindow(title: getLang(context, 'car_start')),
       ),
       Marker(
         markerId: MarkerId('car_end'),
         position: _routeCoordinates[2],
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        infoWindow: InfoWindow(title: 'Car End'),
+        infoWindow: InfoWindow(title: getLang(context, 'car_end')),
       ),
     };
   }

@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebasewithnotification/view/Widget/common_layout_bottomnavbaronly.dart';
+
+import '../../components/applocal.dart';
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -28,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             SizedBox(width: 2),
             Text(
-              'Chat',
+              getLang(context, "Chat"),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -45,18 +47,16 @@ class _ChatScreenState extends State<ChatScreen> {
           ListView(
             padding: EdgeInsets.all(14),
             children: [
-              buildmessageBubble('Hello chatGPT,how are you today?', true),
-              buildmessageBubble('Hello,i’m fine,how can i help you?', false,isAlternate: true),
-              buildmessageBubble('What is the best programming language?', true),
-              buildmessageBubble('There are many programming languages in the market that are used in designing and building websites, various applications and other tasks. All these languages are popular in their place and in the way they are used, and many programmers learn and use them.',
-                  false,isAlternate: false),
-              buildmessageBubble('So explain to me more', true),
-              buildmessageBubble('There are many programming languages in the market that are used in designing and building websites, various applications and other tasks. All these languages are popular in their place and in the way they are used, and many programmers learn and use them.',
-                  false,isAlternate: false),
+              buildmessageBubble(getLang(context, "Hello chatGPT,how are you today?"), true),
+              buildmessageBubble(getLang(context, "Hello,i’m fine,how can i help you?"), false, isAlternate: true),
+              buildmessageBubble(getLang(context, "What is the best programming language?"), true),
+              buildmessageBubble(getLang(context, "There are many programming languages in the market that are used in designing and building websites, various applications and other tasks. All these languages are popular in their place and in the way they are used, and many programmers learn and use them."), false, isAlternate: false),
+              buildmessageBubble(getLang(context, "So explain to me more"), true),
+
 
             ],
           ),),
-          buildmessageInputField(messageController, formkey),
+          buildmessageInputField(context, messageController, formkey),
         ],
       ),
     );
@@ -93,7 +93,7 @@ Widget buildmessageBubble(String text,bool isMe,{bool isAlternate=false}){
     ),
   ));
 }
-Widget buildmessageInputField(TextEditingController messageController,GlobalKey<FormState>formkey) {
+Widget buildmessageInputField( BuildContext context,TextEditingController messageController,GlobalKey<FormState>formkey) {
   return Padding(
     padding: EdgeInsets.all(8),
     child: Form(
@@ -117,7 +117,7 @@ Widget buildmessageInputField(TextEditingController messageController,GlobalKey<
           child: TextFormField(
             controller: messageController,
             decoration: InputDecoration(
-              hintText: 'Write Your Message',
+              hintText: getLang(context, "Write Your Message"),
               hintStyle: TextStyle(
                 color: Color(0XFFA1A1A1),
                 fontSize: 13,

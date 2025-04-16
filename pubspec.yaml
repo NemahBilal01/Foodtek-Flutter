@@ -109,5 +109,7 @@ flutter:
     - images/Celebration-cuate-1.png
     - images/Chicken Burger.png
     - images/Menu Photo.png
+    - assets/lang/ar.json
+    - assets/lang/en.json
 
 

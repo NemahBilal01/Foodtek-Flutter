@@ -1,3 +1,4 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
 import 'package:firebasewithnotification/view/widget/common_layoutWithBottomNav.dart';
@@ -17,7 +18,7 @@ class OrderSuccessScreen extends StatelessWidget {
               height: 26,
               alignment: Alignment.centerLeft,
               child: Text(
-                "Checkout",
+                getLang(context, "checkout"),
                 style: TextStyle(
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
@@ -48,7 +49,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Your Order is Successfully",
+                    getLang(context, "your Order is Successfully"),
                     style: TextStyle(
                       fontFamily: "Inter",
                       fontWeight: FontWeight.w700,
@@ -60,7 +61,7 @@ class OrderSuccessScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    "You will get your order within 12 min.\nThanks for using our services",
+                    getLang(context, "order_confirmation_message"),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Inter",
@@ -105,7 +106,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 minimumSize: Size(327, 58),
               ),
               child: Text(
-                "Track Your Order",
+                getLang(context, "track Your Order"),
                 style: TextStyle(
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,

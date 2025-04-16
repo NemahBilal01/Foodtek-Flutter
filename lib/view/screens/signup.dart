@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 
+import '../../components/applocal.dart';
+
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -57,8 +59,8 @@ class _SignupState extends State<Signup> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Sign up",
+                                     Text(
+                                    getLang(context, "signup"),
                                       style: TextStyle(
                                         fontSize: 32,
                                         fontWeight: FontWeight.bold,
@@ -67,8 +69,8 @@ class _SignupState extends State<Signup> {
                                     ),
                                     const SizedBox(height: 5),
                                     Row(children: [
-                                      const Text(
-                                        "Already have an account? ",
+                                      Text(
+                                       getLang(context,"already have an account?"),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Color(0xFF6C7278),
@@ -84,8 +86,8 @@ class _SignupState extends State<Signup> {
                                             ),
                                           );
                                         },
-                                        child: const Text(
-                                          "Login",
+                                        child:  Text(
+                                          getLang(context, "login"),
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: Color(0xFF25AE4B),
@@ -93,12 +95,12 @@ class _SignupState extends State<Signup> {
                                         ),
                                       ),
                                     ]),
-                                    const SizedBox(height: 20),
+                                     SizedBox(height: 20),
                                     designText(
-                                        "Full Name",
+                                        getLang(context, "full name"),
                                         model.fullNameController,
                                         model.fullNameError),
-                                    designText("Email", model.emailController,
+                                    designText(getLang(context, "login"), model.emailController,
                                         model.emailError),
                                     designDate(context, model),
                                     designPhone(model),
@@ -113,7 +115,7 @@ class _SignupState extends State<Signup> {
                                             bool success = await model.signupUser(context);
                                             if (success) {
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text("Signup Successful!")),
+                                                SnackBar(content: Text(getLang(context,"signup Successful!"))),
                                               );
                                               Navigator.pushAndRemoveUntil(
                                                 context,
@@ -122,7 +124,7 @@ class _SignupState extends State<Signup> {
                                               );
                                             } else {
                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text("User already exists!")),
+                                                SnackBar(content: Text(getLang(context, "user already exists!"))),
                                               );
                                             }
                                           }
@@ -134,8 +136,8 @@ class _SignupState extends State<Signup> {
                                             borderRadius: BorderRadius.circular(10),
                                           ),
                                         ),
-                                        child: const Text(
-                                          "Register",
+                                        child:  Text(
+                                          getLang(context, "register"),
                                           style: TextStyle(fontSize: 14, color: Colors.white),
                                         ),
                                       ),
@@ -190,7 +192,7 @@ class _SignupState extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Birth of date",
+        Text(getLang(context, "birth of date"),
             style: TextStyle(
               color: Color(0xFF6C7278),
               fontSize: 12,
@@ -218,7 +220,7 @@ class _SignupState extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Phone Number",
+         Text(getLang(context, "phone Number"),
             style: TextStyle(
               color: Color(0xFF6C7278),
               fontSize: 12,
@@ -252,7 +254,7 @@ class _SignupState extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Set Password",
+         Text(getLang(context, "set Password"),
             style: TextStyle(
               color: Color(0xFF6C7278),
               fontSize: 12,

@@ -6,6 +6,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/applocal.dart';
+
 class CheeseburgerDetailsScreen extends StatefulWidget {
   const CheeseburgerDetailsScreen({super.key});
 
@@ -41,7 +43,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
-                  "Cheeseburger Wendy's Burger",
+                  getLang(context, 'cheeseburger_wendys_burger'),
                   style: GoogleFonts.poppins(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -70,7 +72,9 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "4.5 (89 reviews)",
+                          getLang(context, "rating_reviews")
+                              .replaceAll("{rating}", "4.5")
+                              .replaceAll("{count}", "89"),
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: Color(0XFF838383),
@@ -121,7 +125,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Spicy",
+                              getLang(context, "spicy"),
                               style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -160,7 +164,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Mild",
+                                  getLang(context, "mild"),
                                   style: GoogleFonts.poppins(
                                     fontSize: 12,
                                     color: Color(0XFF1CC019),
@@ -168,7 +172,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                                   ),
                                 ),
                                 Text(
-                                  "Hot",
+                                  getLang(context, "hot"),
                                   style: GoogleFonts.poppins(
                                     fontSize: 12,
                                     color: Color(0XFFEF2A39),
@@ -188,7 +192,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Quantity",
+                              getLang(context, "quantity"),
                               style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -243,7 +247,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                     final cartProvider = Provider.of<CartProvider>(context, listen: false);
 
                     cartProvider.addToCart({
-                      'name': 'Chicken Burger',
+                      'name': getLang(context, "chicken_burger_alt"),
                       'price': 20,
                       'image': 'images/Chicken Burger.png',
                     });
@@ -259,7 +263,7 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                     minimumSize: Size(330, 48),
                   ),
                   child: Text(
-                    "Add To Cart",
+                    getLang(context, "add_to_cart"),
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14,fontWeight: FontWeight.w500),
                   ),
                 ),

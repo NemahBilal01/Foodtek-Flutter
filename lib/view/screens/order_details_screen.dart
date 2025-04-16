@@ -1,3 +1,4 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             SizedBox(width: 2),
             Text(
-              'Order Details',
+              getLang(context, "order Details"),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -50,7 +51,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Order ID',
+                    Text(getLang(context, "order ID"),
                         style: TextStyle(
                             fontSize: 16,
                             color: Color(0XFF391713),
@@ -60,7 +61,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             fontSize: 10,
                             color: Color(0XFF878787),
                             fontWeight: FontWeight.w500)),
-                    Text('25m',
+                    Text(getLang(context,  "25m"),
                         style: TextStyle(
                             fontSize: 12,
                             color: Color(0XFF263238),
@@ -70,9 +71,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               ],
             ),
             SizedBox(height: 20),
-            buildOrderTimeLine(),
+            buildOrderTimeLine(context),
             SizedBox(height: 20),
-            buildDeliveryHeroCard(),
+            buildDeliveryHeroCard(context),
             SizedBox(height: 50),
             Center(
               child:ElevatedButton(
@@ -83,7 +84,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   );
                 },
                 child: Text(
-                  'Live Track',
+                  getLang(context, "live Track"),
                   style: TextStyle(
                     fontSize: 14,
                     color: Color(0XFFFFFFFF),
@@ -107,19 +108,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 }
 
-Widget buildOrderTimeLine() {
+Widget buildOrderTimeLine(BuildContext context) {
   return Column(
     children: [
-      buildTimeLineStep('Order received', true, Icons.check, true),
-      buildTimeLineStep('Cooking your order', true, Icons.commute_outlined, true),
-      buildTimeLineStep('Courier is picking up order', true, Icons.person,false),
-      buildTimeLineStep('Order delivered', false, Icons.home, false),
+      buildTimeLineStep(context, getLang(context, "order received"), true, Icons.check, true),
+      buildTimeLineStep(context, getLang(context, "cooking your order"), true, Icons.commute_outlined, true),
+      buildTimeLineStep(context, getLang(context, "courier is picking up order"), true, Icons.person, false),
+      buildTimeLineStep(context, getLang(context, "order_delivered"), false, Icons.home, false),
     ],
   );
 }
 
-Widget buildTimeLineStep(String text, bool isCompleted, IconData icon, bool isLineGreen) {
-  bool isLastStep = text == 'Order delivered';
+
+Widget buildTimeLineStep(BuildContext context,String text, bool isCompleted, IconData icon, bool isLineGreen) {
+  bool isLastStep = text == getLang(context, "order_delivered");
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -165,7 +167,7 @@ Widget buildTimeLineStep(String text, bool isCompleted, IconData icon, bool isLi
 }
 
 
-Widget buildDeliveryHeroCard() {
+Widget buildDeliveryHeroCard(BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -181,7 +183,7 @@ Widget buildDeliveryHeroCard() {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Your Delivery Hero',
+                  getLang(context, "your_delivery_hero"),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -191,7 +193,7 @@ Widget buildDeliveryHeroCard() {
                 Row(
                   children: [
                     Text(
-                      'Aleksandr V.',
+                      getLang(context, "aleksandr V."),
                       style: TextStyle(
                         fontSize: 15,
                         color: Color(0XFF2F2E36),
@@ -236,7 +238,7 @@ Widget buildDeliveryHeroCard() {
       Divider(),
       SizedBox(height: 8),
       Text(
-        'Your location',
+        getLang(context, "your location"),
         style: TextStyle(
           fontSize: 12,
           color: Color(0XFF878787),
@@ -249,7 +251,7 @@ Widget buildDeliveryHeroCard() {
           SizedBox(width: 4),
           Expanded(
             child: Text(
-              '123 Al-Madina Street, Abdali, Amman, Jordan',
+              getLang(context, "123 al-madina Street, Abdali, Amman, Jordan"),
               style: TextStyle(
                 fontSize: 12,
                 color: Color(0XFF6C7278),

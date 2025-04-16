@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/applocal.dart';
+
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
 
@@ -16,9 +18,19 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
 
-  String selectedAddress = '5 Noe Zhordania St';
-  String paymentMethod = 'Card';
-  String cardType = 'MasterCard';
+  late String selectedAddress;
+  late String paymentMethod;
+  late String cardType;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedAddress = getLang(context, "address");
+    paymentMethod = getLang(context, "payment_method");
+    cardType = getLang(context, "card_type");
+  }
+
 
 
   @override
@@ -30,8 +42,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Checkout",
+               Text(
+                getLang(context, "checkout"),
                 style: TextStyle(
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
@@ -46,7 +58,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Pay With:',
+                      getLang(context, "pay_with"),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
@@ -58,7 +70,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: -1.0),
                       leading: Radio(
                         visualDensity: VisualDensity(horizontal: -4.0),
-                        value: '88 Zurab Gorgiladze St',
+                        value: getLang(context, "zurab"),
                         groupValue: selectedAddress,
                         onChanged: (value) {
                           setState(() {
@@ -67,7 +79,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         },
                       ),
                       title: Text(
-                        '88 Zurab Gorgiladze St',
+                        getLang(context, "zurab"),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -76,7 +88,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ),
                       subtitle: Text(
-                        'Georgia, Batumi',
+                        getLang(context, "location Georgia"),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -89,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: -1.0),
                       leading: Radio(
                         visualDensity: VisualDensity(horizontal: -3.0),
-                        value: '5 Noe Zhordania St',
+                        value: getLang(context, "address details"),
                         groupValue: selectedAddress,
                         onChanged: (value) {
                           setState(() {
@@ -98,7 +110,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         },
                       ),
                       title: Text(
-                        '5 Noe Zhordania St',
+                       getLang(context, "address details"),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -107,7 +119,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ),
                       subtitle: Text(
-                        'Georgia, Batumi',
+                        getLang(context, "location Georgia"),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -118,7 +130,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       trailing: TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Change',
+                          getLang(context, "change"),
                           style: TextStyle(
                             color: Color(0xFF25AE4B),
                             fontFamily: "Inter",
@@ -130,7 +142,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Promo Code?',
+                      getLang(context, "promo_code"),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -154,7 +166,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                             child: TextField(
                               decoration: InputDecoration(
-                                hintText: 'Enter Your Promo',
+                                hintText: getLang(context, "enter_your_promo"),
                                 hintStyle: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w400,
@@ -182,7 +194,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           child: Text(
-                            'Add',
+                            getLang(context, "add"),
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
@@ -203,7 +215,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Pay With:',
+                            getLang(context, "pay_with"),
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
@@ -219,7 +231,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Radio(
-                                value: 'Card',
+                                value: getLang(context, "payment_method"),
                                 groupValue: paymentMethod,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
@@ -237,7 +249,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 },
                               ),
                               Text(
-                                'Card',
+                                getLang(context, "payment_method"),
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w500,
@@ -251,7 +263,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               SizedBox(width: 7),
                               Radio(
-                                value: 'Cash',
+                                value: getLang(context, 'Cash'),
                                 groupValue: paymentMethod,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
@@ -269,7 +281,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 },
                               ),
                               Text(
-                                'Cash',
+                                getLang(context, 'Cash'),
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w500,
@@ -294,7 +306,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Card Type:',
+                            getLang(context, 'Cash'),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -310,7 +322,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Radio(
-                                value: 'MasterCard',
+                                value: getLang(context, "card_type"),
                                 groupValue: cardType,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
@@ -331,7 +343,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               Image.asset('images/Mastercard.png', width: 40),
                               SizedBox(width: 2),
                               Radio(
-                                value: 'Visa',
+                                value: getLang(context, 'Visa'),
                                 groupValue: cardType,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
@@ -387,11 +399,11 @@ class OrderSummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildPriceRow('Sub-Total', '\$${cartProvider.getTotalPrice()}'),
-          _buildPriceRow('Delivery Charge', '10 \$'),
-          _buildPriceRow('Discount', '10 \$'),
-          _buildPriceRow('Total:', '\$${cartProvider.getTotalPrice() + 10 - 10}',
-              isTotal: true),
+          _buildPriceRow(getLang(context, 'Sub-Total'), '\$${cartProvider.getTotalPrice()}'),
+          _buildPriceRow(getLang(context, 'Delivery Charge'), '10 \$'),
+          _buildPriceRow(getLang(context, 'discount'), '10 \$'),
+          _buildPriceRow(getLang(context, 'Total:'), '\$${cartProvider.getTotalPrice() + 10 - 10}', isTotal: true),
+
           SizedBox(height: 4),
           SizedBox(
             child: Center(
@@ -417,8 +429,8 @@ class OrderSummaryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(7),
                   ),
                 ),
-                child: const Text(
-                  'Place My Order',
+                child:  Text(
+                  getLang(context, 'Place My Order'),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -468,7 +480,7 @@ class PaymentInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Payment Information",
+          getLang(context, "Payment Information"),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -480,11 +492,11 @@ class PaymentInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Payment Method:",
+              getLang(context, "Payment Met:"),
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
             Text(
-              "Credit Card",
+              getLang(context, "Credit Card"),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -498,11 +510,11 @@ class PaymentInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Card Type:",
+              getLang(context, "Card Type:"),
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
             Text(
-              "MasterCard",
+              getLang(context, "card_type"),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

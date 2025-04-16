@@ -1,6 +1,8 @@
 import 'package:firebasewithnotification/view/widget/common_filter.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/applocal.dart';
+
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
 
@@ -49,8 +51,8 @@ class _FilterScreenState extends State<FilterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Filter",
+               Text(
+                getLang(context, "filter"),
                 style: TextStyle(
                   fontSize: 20,
                   color: Color(0XFF391713),
@@ -64,7 +66,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: TextFormField(
                       controller: _minPriceController,
                       decoration: InputDecoration(
-                        hintText: "Min",
+                        hintText: getLang(context, "min"),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:Color(0XFFEAFAEB) ,
@@ -86,7 +88,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: TextFormField(
                       controller: _maxPriceController,
                       decoration: InputDecoration(
-                        hintText: "Max",
+                        hintText: getLang(context, "max"),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:Color(0XFFEAFAEB) ,
@@ -132,8 +134,8 @@ class _FilterScreenState extends State<FilterScreen> {
 
 
 
-              const Text(
-                "Discount",
+               Text(
+                getLang(context, "discount"),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -149,7 +151,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: TextFormField(
                       controller: _discountMinController,
                       decoration:  InputDecoration(
-                        hintText: "Min",
+                        hintText: getLang(context, "min"),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:Color(0XFFEAFAEB) ,
@@ -172,7 +174,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: TextFormField(
                       controller: _discountMaxController,
                       decoration:  InputDecoration(
-                        hintText: "Max",
+                        hintText: getLang(context, "max"),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color:Color(0XFFEAFAEB) ,
@@ -221,27 +223,36 @@ class _FilterScreenState extends State<FilterScreen> {
 
 
               ToggleButtonsWidget(
-                title: "Category",
-                labels: ["Fast Food", "Sea Food", "Dessert"],
+                title: getLang(context, "category"),
+                labels: [
+                  getLang(context, "fast_food"),
+                  getLang(context, "sea_food"),
+                  getLang(context, "dessert")
+                ],
                 isSelected: selectedCategories,
               ),
               ToggleButtonsWidget(
-                title: "Location",
-                labels: ["1 KM", "5 KM", "10 KM"],
+                title: getLang(context, "location"),
+                labels: [
+                  getLang(context, "1_km"),
+                  getLang(context, "5_km"),
+                  getLang(context, "10_km")
+                ],
                 isSelected: selectedLocation,
               ),
               ToggleButtonsWidget(
-                title: "Dish",
+                title: getLang(context, "dish"),
                 labels: [
-                  "Tuna Tartare",
-                  "Spicy Crab Cakes",
-                  "Seafood Paella",
-                  "Clam Chowder",
-                  "Miso-Glazed Cod",
-                  "Lobster Thermidor"
+                  getLang(context, "tuna_tartare"),
+                  getLang(context, "spicy_crab_cakes"),
+                  getLang(context, "seafood_paella"),
+                  getLang(context, "clam_chowder"),
+                  getLang(context, "miso_glazed_cod"),
+                  getLang(context, "lobster_thermidor")
                 ],
                 isSelected: selectedDishes,
               ),
+
             ],
           ),
         ),

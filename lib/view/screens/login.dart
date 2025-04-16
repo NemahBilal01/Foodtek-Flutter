@@ -3,7 +3,10 @@ import 'package:firebasewithnotification/view/screens/home_screen.dart';
 import 'package:firebasewithnotification/view/screens/reset_password_screen.dart';
 import 'package:firebasewithnotification/view/screens/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+
+import '../../components/applocal.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -50,8 +53,8 @@ class Login extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text(
-                                  "Login",
+                                 Text(
+                                getLang(context, "login"),
                                   style: TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold,
@@ -62,8 +65,8 @@ class Login extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      "Don’t have an account? ",
+                                     Text(
+                                      getLang(context, "dont have an account"),
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xFF6C7278),
@@ -80,8 +83,8 @@ class Login extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                      child: const Text(
-                                        "Sign Up",
+                                      child:  Text(
+                                        getLang(context, "signup"),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Color(0xFF25AE4B),
@@ -92,9 +95,10 @@ class Login extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 20),
-                                _designText("Email", model.emailController,
+                                _designText( getLang(context, "email"), model.emailController,
                                     model.emailError),
-                                _designPassword(model),
+                                _designPassword(context, model),
+
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
@@ -108,8 +112,8 @@ class Login extends StatelessWidget {
                                             model.notifyListeners();
                                           },
                                         ),
-                                        const Text(
-                                          "Remember Me",
+                                         Text(
+                                        getLang(context, "remember me"),
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
@@ -120,8 +124,8 @@ class Login extends StatelessWidget {
                                     TextButton(
                                       onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
                                       },
-                                      child: const Text(
-                                        "Forgot Password?",
+                                      child:  Text(
+                                        getLang(context, "forgot password"),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Color(0xFF25AE4B),
@@ -138,7 +142,7 @@ class Login extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => HomeScreen()), // غيّري HomePage لاسم صفحتك
+                                        MaterialPageRoute(builder: (context) => HomeScreen()),
                                       );                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF25AE4B),
@@ -148,14 +152,14 @@ class Login extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
-                                    child: const Text(
-                                      "Login",
+                                    child:  Text(
+                                      getLang(context, "login"),
                                       style: TextStyle(
                                           fontSize: 14, color: Colors.white),
                                     ),
                                   ),
                                 ),
-                                const Padding(
+                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   child: Row(
                                     children: [
@@ -165,7 +169,8 @@ class Login extends StatelessWidget {
                                       Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 10),
-                                        child: Text("OR",
+                                        child: Text(
+                                            getLang(context, "or"),
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey)),
@@ -185,8 +190,8 @@ class Login extends StatelessWidget {
                                           model.googleLogin(context);
                                         },
                                         icon: Image.asset('images/google.png', height: 24),
-                                        label: const Text(
-                                          "Continue with Google",
+                                        label:  Text(
+                                            getLang(context, "continue with Google"),
                                           style: TextStyle(color: Colors.black),
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: false
@@ -209,8 +214,8 @@ class Login extends StatelessWidget {
                                           model.facebookLogin(context);
                                         },
                                         icon: Image.asset('images/2021_Facebook_icon 1.png', height: 24),
-                                        label: const Text(
-                                          "Continue with Facebook",
+                                        label:  Text(
+                                            getLang(context, "continue with Facebook"),
                                           style: TextStyle(color: Colors.black),
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: false
@@ -232,8 +237,8 @@ class Login extends StatelessWidget {
                                           model.appleLogin(context);
                                         },
                                         icon: const Icon(Icons.apple, color: Colors.black),
-                                        label: const Text(
-                                          "Continue with Apple",
+                                        label:  Text(
+                                          getLang(context, "continue with Apple"),
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         style: ElevatedButton.styleFrom(
@@ -293,12 +298,12 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget _designPassword(LoginController model) {
+  Widget _designPassword(BuildContext context, LoginController model) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Password",
+         Text(
+        getLang(context, "password"),
           style: TextStyle(
             color: Color(0xFF6C7278),
             fontSize: 12,

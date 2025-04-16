@@ -2,6 +2,8 @@ import 'package:firebasewithnotification/view/Widget/common_layout_bottomnavbaro
 
 import 'package:flutter/material.dart';
 
+import '../../components/applocal.dart';
+
 class Profile2Screen extends StatelessWidget {
   const Profile2Screen({super.key});
 
@@ -9,8 +11,8 @@ class Profile2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavBarOnly(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
+        title:  Text(
+            getLang(context,"profile"),
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
         elevation: 0,
@@ -84,11 +86,11 @@ class Profile2Screen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      buildTextField("Username"),
-                      buildTextField("Email"),
-                      buildTextField("Phone Number"),
-                      buildTextField("Password"),
-                      buildTextField("Address"),
+                      buildTextField(getLang(context, "username")),
+                      buildTextField(getLang(context, "email")),
+                      buildTextField(getLang(context, "phone Number")),
+                      buildTextField(getLang(context, "password")),
+                      buildTextField(getLang(context, "address")),
                     ],
                   ),
                 ),
@@ -108,8 +110,8 @@ class Profile2Screen extends StatelessWidget {
                         vertical: 10, horizontal: 24,
                       ),
                     ),
-                    child: const Text(
-                      "Update",
+                    child:  Text(
+                      getLang(context, "update"),
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
