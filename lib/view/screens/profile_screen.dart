@@ -1,11 +1,11 @@
+import 'package:firebasewithnotification/controller/theme_provider.dart';
 import 'package:firebasewithnotification/view/Widget/common_layout_bottomnavbaronly.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/profile2_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/applocal.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -15,25 +15,21 @@ class ProfileScreen extends StatelessWidget {
     return BottomNavBarOnly(
       appBar: AppBar(
         title: Text(
-          getLang(context, "profile"),
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          "Profile",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DeliveryHeroPage()), // غير الاسم حسب الصفحة المطلوبة
+              MaterialPageRoute(builder: (context) => DeliveryHeroPage()),
             );
           },
         ),
-
-
       ),
       body: Container(
-        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(top: 5, left: 35),
           child: SingleChildScrollView(
@@ -41,6 +37,7 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 40,
+                  backgroundColor: Colors.white,
                   backgroundImage: AssetImage("images/Mask group.png"),
                 ),
                 SizedBox(height: 10),
@@ -57,7 +54,6 @@ class ProfileScreen extends StatelessWidget {
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
-                          color: Color(0xFF1B1B1B),
                         ),
                       ),
                       Text(
@@ -73,44 +69,57 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16),
-                _buildContainer(getLang(context, "my_account"), [
+                _buildContainer("My Account", context, [
                   _buildListTile(
                     Icons.person_add_alt_outlined,
-                    getLang(context, "personal_info"),
+                    "Personal information",
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Profile2Screen()),
+                        MaterialPageRoute(
+                            builder: (context) => Profile2Screen()),
                       );
                     },
                   ),
                   _buildListTile(
                     Icons.language,
-                    getLang(context, "language"),
+                    "Language",
                     trailing: Text("عربيه"),
                   ),
-                  _buildListTile(Icons.privacy_tip_outlined, getLang(context, "privacy_policy")),
-                  _buildListTile(Icons.settings_outlined, getLang(context, "setting")),
+                  _buildListTile(Icons.privacy_tip_outlined, "Privacy Policy"),
+                  _buildListTile(Icons.settings_outlined, "Setting"),
+                  _buildListTile(
+                    Icons.dark_mode,
+                    "Dark Mode",
+                    trailing: Switch(
+                      value: Provider.of<ThemeProvider>(context).themeMode ==
+                          ThemeMode.dark,
+                      onChanged: (value) {
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme(value);
+                      },
+                    ),
+                  ),
                 ]),
                 SizedBox(height: 16),
-                _buildContainer(getLang(context, "notifications"), [
+                _buildContainer("Notifications", context, [
                   _buildListTile(
                     Icons.notifications_none,
-                    getLang(context, "push_notifications"),
+                    "Push Notifications",
                     trailing: Switch(value: true, onChanged: (val) {}),
                   ),
                   _buildListTile(
                     Icons.notifications_none,
-                    getLang(context, "promo_notifications"),
+                    "Promotional Notifications",
                     trailing: Switch(value: false, onChanged: (val) {}),
                   ),
                 ]),
                 SizedBox(height: 16),
-                _buildContainer(getLang(context, "more"), [
-                  _buildListTile(Icons.help_outline, getLang(context, "help_center")),
+                _buildContainer("More", context, [
+                  _buildListTile(Icons.help_outline, "Help Center"),
                   _buildListTile(
                     Icons.logout,
-                    getLang(context, "logout"),
+                    "Log Out",
                     textColor: Color(0xFFDC1010),
                     iconColor: Color(0xFFDC1010),
                     onTap: () {
@@ -120,7 +129,6 @@ class ProfileScreen extends StatelessWidget {
                       );
                     },
                   ),
-
                 ]),
               ],
             ),
@@ -130,17 +138,20 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContainer(String title, List<Widget> children) {
+  Widget _buildContainer(
+      String title, BuildContext context, List<Widget> children) {
     return Container(
       width: 380,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Color(0xFFF5F5F5)),
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 15, spreadRadius: 0),
-        ],
+        border: Border.all(
+          color: const Color(0xFFF5F5F5),
+        ),
+
+        // boxShadow: [
+        //   BoxShadow(color: Colors.black12, blurRadius: 15, spreadRadius: 0),
+        // ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +162,6 @@ class ProfileScreen extends StatelessWidget {
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,
               fontSize: 16,
-              color: Color(0xFF1B1B1B),
             ),
           ),
           Column(
@@ -169,20 +179,19 @@ class ProfileScreen extends StatelessWidget {
     Widget? trailing,
     Color textColor = Colors.black,
     Color iconColor = Colors.black,
-        VoidCallback? onTap,
+    VoidCallback? onTap,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
-        leading: Icon(icon, color: iconColor, size: 18),
+        leading: Icon(icon, size: 18),
         title: Text(
           title,
           style: TextStyle(
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
             fontSize: 14,
-            color: textColor,
           ),
         ),
         trailing: trailing,
