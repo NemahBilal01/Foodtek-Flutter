@@ -1,0 +1,2 @@
+Pool optimizer completed in 0.994 seconds
+Found 9,269 package versions referenced in your dependency graph. 8,636 (93%) were optimized away.
