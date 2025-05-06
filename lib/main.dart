@@ -5,6 +5,8 @@ import 'package:firebasewithnotification/controller/order_provider.dart';
 import 'package:firebasewithnotification/controller/theme_provider.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 import 'package:firebasewithnotification/view/screens/history_screen.dart';
+import 'package:firebasewithnotification/view/screens/home_screen.dart';
+import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +16,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'components/applocal.dart';
 import 'firebase_options.dart';
+import 'package:flutter/painting.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  PaintingBinding.instance.debugDisableShaderCompilation = true;
+
   runApp(
     MultiProvider(
       providers: [
@@ -27,11 +32,14 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-
       ],
       child: MyApp(),
     ),
   );
+}
+
+extension on PaintingBinding {
+  set debugDisableShaderCompilation(bool debugDisableShaderCompilation) {}
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +68,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             primarySwatch: Colors.deepOrange,
           ),
-          home: SplashScreen(),
+          home: HomeScreen(),
           localizationsDelegates: [
             AppLocale.delegate,
             GlobalMaterialLocalizations.delegate,

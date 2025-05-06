@@ -1,10 +1,12 @@
+import 'package:firebasewithnotification/services/apiService.dart';
+import 'package:firebasewithnotification/view/screens/home_screen.dart';
 import 'package:firebasewithnotification/view/widget/database.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 
 class LoginController extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
@@ -13,6 +15,26 @@ class LoginController extends ChangeNotifier {
   bool rememberMe = false;
   String? emailError;
   String? passwordError;
+  final _authService = AuthService();
+
+  void handleLogin(BuildContext context) async {
+    final user = await _authService.login(
+      emailController.text.trim(),
+      passwordController.text.trim(),
+    );
+    if (user != null) {
+      print('Logged in: ${user.name}, Token: ${user.token}');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => HomeScreen()),
+      );
+
+    } else {
+      ScaffoldMessenger.of(context ).showSnackBar(
+        SnackBar(content: Text('login failed ')),
+      );
+    }
+  }
 
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
@@ -42,8 +64,11 @@ class LoginController extends ChangeNotifier {
     } else if (password.length < 6) {
       passwordError = "Password must be at least 6 characters";
       isValid = false;
-    } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$').hasMatch(password)) {
-      passwordError = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    } else if (!RegExp(
+            r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$')
+        .hasMatch(password)) {
+      passwordError =
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
       isValid = false;
     } else {
       passwordError = null;
@@ -73,7 +98,6 @@ class LoginController extends ChangeNotifier {
       );
 
       // Navigate to home screen here
-
     } else {
       passwordError = "Invalid Email or Password";
       notifyListeners();
@@ -119,10 +143,11 @@ class LoginController extends ChangeNotifier {
       );
     }
   }
+
   Future<void> appleLogin(BuildContext context) async {
     try {
       final AuthorizationCredentialAppleID credential =
-      await SignInWithApple.getAppleIDCredential(
+          await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName
