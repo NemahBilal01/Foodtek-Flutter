@@ -232,7 +232,9 @@
     "expiry": "Expiry",
     "cvc": "CVC",
     "order_details_email": "We will send you an order details to your email after the successful payment",
-    "pay_for_order": "Pay for the order"
+    "pay_for_order": "Pay for the order",
+    "notifications_failed_to_load": "Notifications failed to load",
+    "no_notifications": "No Notifications"
 
 
 }

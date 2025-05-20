@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "636372315953",
+    "project_id": "food-teck",
+    "storage_bucket": "food-teck.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636372315953:android:aa38fb90a75099f5eb8a10",
+        "android_client_info": {
+          "package_name": "com.example.food_teck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636372315953-b86bcr3h7ojam0lkj2ed1ifpabrsupc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_teck",
+            "certificate_hash": "457d519a1c8c575b8f3a6756c5bed8ce06b7854e"
+          }
+        },
+        {
+          "client_id": "636372315953-bhm1rf17q2b4igfe5pdgp8jnev8eueju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK_dlZUtcIHjBq4jccYsudPFzhNTj2nzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636372315953-bhm1rf17q2b4igfe5pdgp8jnev8eueju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

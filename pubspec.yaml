@@ -29,7 +29,7 @@ dependencies:
   flutter_facebook_auth: ^7.1.1
   sign_in_with_apple: ^7.0.1
   country_code_picker: ^3.3.0
-
+  fluttertoast: ^8.2.1
 
 
   lucide_icons: ^0.257.0
@@ -81,9 +81,7 @@ flutter:
     - images/Rectangle 128.png
     - images/pizza.png
     - images/Frame 71.png
-    - images/chese burger.png
     - images/chicken.png
-    - images/chicken burger.png
     - images/Rectangle 128 (1).png
     - images/Rectangle 133.png
     - images/Rectangle 136.png
@@ -109,6 +107,7 @@ flutter:
     - images/Celebration-cuate-1.png
     - images/Chicken Burger.png
     - images/Menu Photo.png
+    - images/Cheese_burger.png
     - assets/lang/ar.json
     - assets/lang/en.json
 

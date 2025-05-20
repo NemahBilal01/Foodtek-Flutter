@@ -1,4 +1,5 @@
 import 'package:firebasewithnotification/controller/theme_provider.dart';
+import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/Widget/common_layout_bottomnavbaronly.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
@@ -12,27 +13,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavBarOnly(
-      appBar: AppBar(
-        title: Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DeliveryHeroPage()),
-            );
-          },
-        ),
-      ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 5, left: 35),
-          child: SingleChildScrollView(
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(top: 20, left: 35, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
             child: Column(
               children: [
                 CircleAvatar(
@@ -41,102 +27,64 @@ class ProfileScreen extends StatelessWidget {
                   backgroundImage: AssetImage("images/Mask group.png"),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  width: 158,
-                  height: 46,
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Ahmad Daboor",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        "ahmad1709@gmail.com",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Color(0xFF838383),
-                        ),
-                      ),
-                    ],
-                  ),
+                Text(
+                  "Ahmad Daboor",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
-                SizedBox(height: 16),
-                _buildContainer("My Account", context, [
-                  _buildListTile(
-                    Icons.person_add_alt_outlined,
-                    "Personal information",
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Profile2Screen()),
-                      );
-                    },
-                  ),
-                  _buildListTile(
-                    Icons.language,
-                    "Language",
-                    trailing: Text("عربيه"),
-                  ),
-                  _buildListTile(Icons.privacy_tip_outlined, "Privacy Policy"),
-                  _buildListTile(Icons.settings_outlined, "Setting"),
-                  _buildListTile(
-                    Icons.dark_mode,
-                    "Dark Mode",
-                    trailing: Switch(
-                      value: Provider.of<ThemeProvider>(context).themeMode ==
-                          ThemeMode.dark,
-                      onChanged: (value) {
-                        Provider.of<ThemeProvider>(context, listen: false)
-                            .toggleTheme(value);
-                      },
-                    ),
-                  ),
-                ]),
-                SizedBox(height: 16),
-                _buildContainer("Notifications", context, [
-                  _buildListTile(
-                    Icons.notifications_none,
-                    "Push Notifications",
-                    trailing: Switch(value: true, onChanged: (val) {}),
-                  ),
-                  _buildListTile(
-                    Icons.notifications_none,
-                    "Promotional Notifications",
-                    trailing: Switch(value: false, onChanged: (val) {}),
-                  ),
-                ]),
-                SizedBox(height: 16),
-                _buildContainer("More", context, [
-                  _buildListTile(Icons.help_outline, "Help Center"),
-                  _buildListTile(
-                    Icons.logout,
-                    "Log Out",
-                    textColor: Color(0xFFDC1010),
-                    iconColor: Color(0xFFDC1010),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                  ),
-                ]),
+                Text(
+                  "ahmad1709@gmail.com",
+                  style: TextStyle(fontSize: 14, color: Color(0xFF838383)),
+                ),
               ],
             ),
           ),
-        ),
+          SizedBox(height: 16),
+          _buildContainer("My Account", context, [
+            _buildListTile(Icons.person_add_alt_outlined, "Personal information", onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => Profile2Screen()));
+            }),
+            _buildListTile(Icons.language, "Language", trailing: Text("عربيه")),
+            _buildListTile(Icons.privacy_tip_outlined, "Privacy Policy"),
+            _buildListTile(Icons.settings_outlined, "Setting"),
+            _buildListTile(Icons.dark_mode, "Dark Mode",
+              trailing: Switch(
+                value: Provider.of<ThemeProvider>(context).themeMode == ThemeMode.dark,
+                onChanged: (value) {
+                  Provider.of<ThemeProvider>(context, listen: false).toggleTheme(value);
+                },
+              ),
+            ),
+          ]),
+          SizedBox(height: 16),
+          _buildContainer("Notifications", context, [
+            _buildListTile(Icons.notifications_none, "Push Notifications", trailing: Switch(value: true, onChanged: (_) {})),
+            _buildListTile(Icons.notifications_none, "Promotional Notifications", trailing: Switch(value: false, onChanged: (_) {})),
+          ]),
+          SizedBox(height: 16),
+          _buildContainer("More", context, [
+            _buildListTile(Icons.help_outline, "Help Center"),
+            _buildListTile(Icons.logout, "Log Out",
+                textColor: Color(0xFFDC1010),
+                iconColor: Color(0xFFDC1010),
+                onTap: () async {
+                  final api = ApiService();
+                  final result = await api.logout();
+                  if (result != null && result.message == "Logout successful") {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                          (route) => false,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Logout failed")));
+                  }
+                }),
+          ]),
+        ],
       ),
     );
   }
+
 
   Widget _buildContainer(
       String title, BuildContext context, List<Widget> children) {

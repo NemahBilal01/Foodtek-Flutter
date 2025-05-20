@@ -100,7 +100,7 @@ class _SignupState extends State<Signup> {
                                         getLang(context, "full name"),
                                         model.fullNameController,
                                         model.fullNameError),
-                                    designText(getLang(context, "login"), model.emailController,
+                                    designText(getLang(context, "Email"), model.emailController,
                                         model.emailError),
                                     designDate(context, model),
                                     designPhone(model),

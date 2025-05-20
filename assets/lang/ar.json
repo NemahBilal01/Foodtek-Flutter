@@ -233,7 +233,9 @@
     "expiry": "تاريخ الانتهاء",
     "cvc": "CVC",
     "order_details_email": "سوف نرسل تفاصيل الطلب إلى بريدك الإلكتروني بعد الدفع الناجح",
-    "pay_for_order": "ادفع للطلب"
+    "pay_for_order": "ادفع للطلب",
+    "notifications_failed_to_load": "فشل تحميل الاشعارات",
+    "no_notifications": "لا يوجد اشعاراات "
 
 
 }

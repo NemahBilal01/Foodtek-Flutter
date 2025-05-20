@@ -1,3 +1,4 @@
+import 'package:firebasewithnotification/model/postman_model.dart';
 import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/screens/home_screen.dart';
 import 'package:firebasewithnotification/view/widget/database.dart';
@@ -8,6 +9,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../view/widget/MainHomeContent.dart';
+
 class LoginController extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -15,7 +18,7 @@ class LoginController extends ChangeNotifier {
   bool rememberMe = false;
   String? emailError;
   String? passwordError;
-  final _authService = AuthService();
+  final _authService = ApiService();
 
   void handleLogin(BuildContext context) async {
     final user = await _authService.login(
@@ -115,35 +118,74 @@ class LoginController extends ChangeNotifier {
   Future<void> googleLogin(BuildContext context) async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
+      // final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      GoogleSignInAccount? googleUser = googleSignIn.currentUser;
+      if (googleUser == null) {
+        googleUser = await googleSignIn.signIn();
+      }
       if (googleUser != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Google Login Successful")),
-        );
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final idToken = googleAuth.idToken;
+
+        print("Google ID Token:");
+        print(idToken);
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => HomeScreen()));
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Google Login Failed: \$e")),
+        SnackBar(content: Text("Google Login Failed: $e")),
       );
     }
   }
+
 
   Future<void> facebookLogin(BuildContext context) async {
     try {
       final LoginResult result = await FacebookAuth.instance.login();
+
       if (result.status == LoginStatus.success) {
+        final accessToken = result.accessToken!.toJson()['token'];
+
+        final response = await _authService.loginByFacebook(
+          FacebookLoginRequest(accessToken: accessToken),
+        );
+
+        if (response != null) {
+          await saveToken(response.token);
+
+          final user = response.user;
+          print('Welcome ${user.name}, Email: ${user.email}');
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Server Login Successful! Token: ${response.token}")),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Server Login Failed")),
+          );
+        }
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Facebook Login Successful")),
+          SnackBar(content: Text("Facebook Login Failed: ${result.message}")),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Facebook Login Failed: \$e")),
+        SnackBar(content: Text("Login Error: $e")),
       );
     }
   }
 
+
+
+  Future<void> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('auth_token', token);
+  }
   Future<void> appleLogin(BuildContext context) async {
     try {
       final AuthorizationCredentialAppleID credential =

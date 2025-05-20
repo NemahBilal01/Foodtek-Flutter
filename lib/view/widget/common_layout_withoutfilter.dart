@@ -24,6 +24,7 @@ class CommonLayoutWithoutfilterclips extends StatefulWidget {
 class _CommonLayoutWithoutfilterclipsState
     extends State<CommonLayoutWithoutfilterclips> {
   int _selectedIndex = 0;
+
   // String selectedFilter = "All";
 
   final List<Widget> _screens = [
@@ -39,6 +40,7 @@ class _CommonLayoutWithoutfilterclipsState
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

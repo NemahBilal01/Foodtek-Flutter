@@ -204,7 +204,7 @@ class _LoginState extends State<Login> {
                                             getLang(context,
                                                 "continue with Google"),
                                             style:
-                                                TextStyle(color: Colors.black),
+                                            TextStyle(color: Colors.black),
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: false),
                                         style: ElevatedButton.styleFrom(
@@ -213,7 +213,7 @@ class _LoginState extends State<Login> {
                                               vertical: 15),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                             side: const BorderSide(
                                                 color: Colors.grey),
                                           ),

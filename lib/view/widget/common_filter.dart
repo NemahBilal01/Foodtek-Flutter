@@ -187,35 +187,35 @@ List<NotificationItem> _allNotifications = [
   NotificationItem(
     title: "Delayed Order:",
     message:
-    "We’re sorry! Your order is running late. New ETA: 10:30 PM. Thanks for your patience!",
+        "We’re sorry! Your order is running late. New ETA: 10:30 PM. Thanks for your patience!",
     date: "Last Wednesday at 9:42 AM",
     isRead: false,
   ),
   NotificationItem(
     title: "Promotional Offer",
     message:
-    "Craving something delicious? 🍔 Get 20% off on your next order. Use code: YUMMY20.",
+        "Craving something delicious? 🍔 Get 20% off on your next order. Use code: YUMMY20.",
     date: "Last Wednesday at 9:42 AM",
     isRead: true,
   ),
   NotificationItem(
     title: "Out for Delivery:",
     message:
-    "Your order is on the way! 🚗 Estimated arrival: 15 mins. Stay hungry!",
+        "Your order is on the way! 🚗 Estimated arrival: 15 mins. Stay hungry!",
     date: "Last Wednesday at 9:42 AM",
     isRead: false,
   ),
   NotificationItem(
     title: "Order Confirmation:",
     message:
-    "Your order has been placed! 🍔 We're preparing it now. Track your order live!",
+        "Your order has been placed! 🍔 We're preparing it now. Track your order live!",
     date: "Last Wednesday at 9:42 AM",
     isRead: true,
   ),
   NotificationItem(
     title: "Delivered:",
     message:
-    "Enjoy your meal! 🍕 Your order has been delivered. Rate your experience!",
+        "Enjoy your meal! 🍕 Your order has been delivered. Rate your experience!",
     date: "",
     isRead: true,
   ),

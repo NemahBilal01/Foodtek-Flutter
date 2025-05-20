@@ -1,5 +1,5 @@
 import 'package:firebasewithnotification/services/apiService.dart'
-    show AuthService;
+    show ApiService;
 import 'package:firebasewithnotification/view/widget/database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +10,7 @@ class SignupControler extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final AuthService _authService = AuthService();
+  final ApiService _authService = ApiService();
 
   String? birthDateError;
   String? fullNameError;

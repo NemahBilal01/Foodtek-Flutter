@@ -1,12 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebasewithnotification/controller/cart_provider.dart';
+import 'package:firebasewithnotification/controller/checkout_provider.dart';
 import 'package:firebasewithnotification/controller/favorite_provider.dart';
+import 'package:firebasewithnotification/controller/home_provider.dart';
 import 'package:firebasewithnotification/controller/order_provider.dart';
 import 'package:firebasewithnotification/controller/theme_provider.dart';
+import 'package:firebasewithnotification/view/screens/checkout_screen.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
 import 'package:firebasewithnotification/view/screens/history_screen.dart';
 import 'package:firebasewithnotification/view/screens/home_screen.dart';
+import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
+import 'package:firebasewithnotification/view/screens/order_success_screen.dart';
+import 'package:firebasewithnotification/view/screens/profile_screen.dart';
 import 'package:firebasewithnotification/view/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +24,12 @@ import 'components/applocal.dart';
 import 'firebase_options.dart';
 import 'package:flutter/painting.dart';
 
+import 'view/widget/MainHomeContent.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
+
   PaintingBinding.instance.debugDisableShaderCompilation = true;
 
   runApp(
@@ -32,6 +39,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
       child: MyApp(),
     ),
@@ -68,7 +76,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             primarySwatch: Colors.deepOrange,
           ),
-          home: HomeScreen(),
+          home: SplashScreen(),
           localizationsDelegates: [
             AppLocale.delegate,
             GlobalMaterialLocalizations.delegate,

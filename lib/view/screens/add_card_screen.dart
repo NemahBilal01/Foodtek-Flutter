@@ -4,9 +4,35 @@ import 'package:flutter/material.dart';
 
 import '../../components/applocal.dart';
 
-
-class AddCardScreen extends StatelessWidget {
+class AddCardScreen extends StatefulWidget {
   @override
+  State<AddCardScreen> createState() => _AddCardScreenState();
+}
+
+class _AddCardScreenState extends State<AddCardScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController cardNumberController = TextEditingController();
+  final TextEditingController expiryController = TextEditingController();
+  final TextEditingController cvcController = TextEditingController();
+
+  Future<void> payNow() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrderSuccessScreen(),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    cardNumberController.dispose();
+    expiryController.dispose();
+    cvcController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return CommonLayoutWithBottomNav(
       body: Padding(
@@ -27,16 +53,20 @@ class AddCardScreen extends StatelessWidget {
               const SizedBox(height: 25),
               Center(child: Image.asset('images/Group.png', width: 365)),
               const SizedBox(height: 18),
-              buildTextField(context,getLang(context, "name")),
+              buildTextField(context, getLang(context, "name"),
+                  controller: nameController),
               const SizedBox(height: 16),
-              buildTextField(context,getLang(context, "card_number"), hasIcon: true),
+              buildTextField(context, getLang(context, "card_number"),
+                  hasIcon: true, controller: cardNumberController),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildTextField(context,getLang(context, "expiry"), width: 150),
-                    buildTextField(context,getLang(context, "cvc"), width: 150),
+                    buildTextField(context, getLang(context, "expiry"),
+                        width: 150, controller: expiryController),
+                    buildTextField(context, getLang(context, "cvc"),
+                        width: 150, controller: cvcController),
                   ],
                 ),
               ),
@@ -74,13 +104,14 @@ class AddCardScreen extends StatelessWidget {
                         ],
                       ),
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderSuccessScreen(),
-                            ),
-                          );
+                        onPressed: () async {
+                          await payNow();
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => OrderSuccessScreen(),
+                          //   ),
+                          // );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF25AE4B),
@@ -127,11 +158,12 @@ class AddCardScreen extends StatelessWidget {
   }
 
   Widget buildTextField(
-      BuildContext context,
-      String label, {
-        bool hasIcon = false,
-        double width = 385,
-      }) {
+    BuildContext context,
+    String label, {
+    bool hasIcon = false,
+    double width = 385,
+    required TextEditingController controller,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,18 +188,18 @@ class AddCardScreen extends StatelessWidget {
             border: Border.all(color: const Color(0xFFEDF1F3), width: 2),
           ),
           child: TextField(
-            keyboardType:
-            label == getLang(context, "card_number") || label == getLang(context, "cvc")
+            keyboardType: label == getLang(context, "card_number") ||
+                    label == getLang(context, "cvc")
                 ? TextInputType.number
                 : TextInputType.text,
             decoration: InputDecoration(
               border: InputBorder.none,
               suffixIcon: hasIcon
                   ? Image.asset(
-                'images/shopping_15402438 1.png',
-                width: 38,
-                height: 38,
-              )
+                      'images/shopping_15402438 1.png',
+                      width: 38,
+                      height: 38,
+                    )
                   : null,
             ),
             style: const TextStyle(
@@ -183,4 +215,3 @@ class AddCardScreen extends StatelessWidget {
     );
   }
 }
-

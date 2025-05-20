@@ -14,7 +14,6 @@ class BottomNavBarOnly extends StatefulWidget {
 
   @override
   State<BottomNavBarOnly> createState() => _BottomNavBarOnlyState();
-
 }
 
 class _BottomNavBarOnlyState extends State<BottomNavBarOnly> {
