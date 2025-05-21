@@ -1,5 +1,3 @@
-import 'package:firebasewithnotification/services/apiService.dart'
-    show ApiService;
 import 'package:firebasewithnotification/view/widget/database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +8,6 @@ class SignupControler extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final ApiService _authService = ApiService();
 
   String? birthDateError;
   String? fullNameError;
@@ -22,7 +19,6 @@ class SignupControler extends ChangeNotifier {
   bool isPasswordHidden = true;
 
   String get countryCode => _countryCode;
-
   set countryCode(String value) {
     _countryCode = value;
     notifyListeners();
@@ -47,14 +43,19 @@ class SignupControler extends ChangeNotifier {
   }
 
   Future<bool> signupUser(BuildContext context) async {
-    String name = fullNameController.text.trim();
+    final dbHelper = DatabaseHelper();
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
-    String phone = phoneController.text.trim();
 
-    final user = await _authService.register(name, email, password, phone);
-    return user != null;
+    var existingUser = await dbHelper.getUser(email, password);
+    if (existingUser != null) {
+      return false;
+    } else {
+      await dbHelper.insertUser(email, password);
+      return true;
+    }
   }
+
 
   bool validateInputs(BuildContext context) {
     bool isValid = true;
@@ -94,11 +95,8 @@ class SignupControler extends ChangeNotifier {
     } else if (password.length < 6) {
       passwordError = "Password must be at least 6 characters";
       isValid = false;
-    } else if (!RegExp(
-            r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$')
-        .hasMatch(password)) {
-      passwordError =
-          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$').hasMatch(password)) {
+      passwordError = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
       isValid = false;
     } else {
       passwordError = null;
@@ -107,6 +105,7 @@ class SignupControler extends ChangeNotifier {
     notifyListeners();
     return isValid;
   }
+
 
   void showCountryPicker(BuildContext context) {
     showModalBottomSheet(
@@ -123,8 +122,7 @@ class SignupControler extends ChangeNotifier {
               },
             ),
             ListTile(
-              leading:
-                  Image.asset("images/flag_jordan.png", width: 30, height: 20),
+              leading: Image.asset("images/flag_jordan.png", width: 30, height: 20),
               title: Text("+962 (Jordan)"),
               onTap: () {
                 countryCode = "+962";

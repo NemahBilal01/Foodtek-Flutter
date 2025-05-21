@@ -1,11 +1,10 @@
-import 'package:firebasewithnotification/components/applocal.dart';
-import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/screens/cheeseburger%20_screen.dart';
 import 'package:firebasewithnotification/view/screens/favorite_screen%20.dart';
 import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:firebasewithnotification/view/screens/pizza_category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/home_provider.dart';
@@ -22,18 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   late String selectedFilter = '';
 
+
+
   @override
   void initState() {
     super.initState();
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    homeProvider.fetchData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      homeProvider.fetchData();
-
       setState(() {
         selectedFilter = getLang(context, "all");
       });
     });
   }
+
 
   void _onItemTapped(int index) {
     if (index == 1) {
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
   void _updateFilter(String filter) {
     setState(() {
       selectedFilter = filter;
@@ -53,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
@@ -141,247 +142,244 @@ class _HomeScreenState extends State<HomeScreen> {
       body: homeProvider.isLoading
           ? Center(child: CircularProgressIndicator())
           : homeProvider.error != null
-              ? Center(child: Text(homeProvider.error!))
-              : Padding(
-                  padding: const EdgeInsets.all(28),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 420,
-                        height: 42,
-                        margin: EdgeInsets.only(left: 1),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          border: Border.all(color: Colors.grey, width: 1),
-                        ),
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical.center,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: getLang(
-                                context, "search menu, restaurant or etc"),
-                            hintStyle: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey,
-                            ),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.only(left: 12),
-                              child:
-                                  Icon(Icons.search, color: Color(0xFF878787)),
-                            ),
-                            suffixIcon: Padding(
-                              padding: EdgeInsets.only(right: 12),
-                              child: Icon(Icons.tune, color: Color(0xFF878787)),
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            _buildFilterChip(
-                              getLang(context, "all"),
-                              "",
-                              selectedFilter,
-                              _updateFilter,
-                              context,
-                            ),
-                            SizedBox(width: 12),
-                            _buildFilterChip(
-                              getLang(context, "burger"),
-                              "images/burger.png",
-                              selectedFilter,
-                              _updateFilter,
-                              context,
-                            ),
-                            SizedBox(width: 12),
-                            _buildFilterChip(
-                              getLang(context, "pizza"),
-                              "images/pizzaa.png",
-                              selectedFilter,
-                              _updateFilter,
-                              context,
-                            ),
-                            SizedBox(width: 12),
-                            _buildFilterChip(
-                              getLang(context, "sandwich"),
-                              "images/sandwich.png",
-                              selectedFilter,
-                              _updateFilter,
-                              context,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Stack(
-                        children: [
-                          Container(
-                            width: 410,
-                            height: 128,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              image: DecorationImage(
-                                image: AssetImage("images/Frame 71.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 26,
-                            left: 7,
-                            child: Container(
-                              width: 150,
-                              height: 38,
-                              alignment: Alignment.center,
-                              child: Text(
-                                getLang(context, "experience_new_dish"),
-                                style: GoogleFonts.inter(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.0,
-                                  color: Color(0xFFF8F8F8),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 72,
-                            left: 14,
-                            child: Container(
-                              width: 127,
-                              height: 29,
-                              alignment: Alignment.center,
-                              child: Text(
-                                getLang(context, "discount_30"),
-                                style: GoogleFonts.leagueSpartan(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.0,
-                                  color: Color(0xFFF8F8F8),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(5, (index) {
-                            bool isActive = index == 2;
-                            return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 4),
-                              width: isActive ? 20 : 20,
-                              height: 5,
-                              decoration: BoxDecoration(
-                                color: isActive
-                                    ? Color(0xFF25AE4B)
-                                    : Color(0xFFDBF4D1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2),
-                          child: Text(
-                            getLang(context, "top_rated"),
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              height: 1.0,
-                              letterSpacing: 0,
-                              textBaseline: TextBaseline.alphabetic,
-                              color: Color(0xFF391713),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 220,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: homeProvider.topRated.length,
-                          itemBuilder: (context, index) {
-                            final item = homeProvider.topRated[index];
-                            return _buildProductCardFromApi(
-                              context,
-                              item,
-                              index == homeProvider.topRated.length - 1,
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              getLang(context, "recommend"),
-                              style: GoogleFonts.inter(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF391713),
-                              ),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  getLang(context, "view_all"),
-                                  style: TextStyle(
-                                    color: Color(0xFF25AE4B),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(width: 6),
-                                Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  color: Color(0xFF25AE4B),
-                                  size: 16,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        width: 371,
-                        height: 108,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: homeProvider.recommended.length,
-                          itemBuilder: (context, index) {
-                            final item = homeProvider.recommended[index];
-                            return _buildRecommendedItemFromApi(item);
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
+          ? Center(child: Text(homeProvider.error!))
+          : Padding(
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          children: [
+            Container(
+              width: 420,
+              height: 42,
+              margin: EdgeInsets.only(left: 1),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              child: TextField(
+                textAlignVertical: TextAlignVertical.center,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+                decoration: InputDecoration(
+                  hintText: getLang(context, "search menu, restaurant or etc"),
+                  hintStyle: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Icon(Icons.search, color: Color(0xFF878787)),
+                  ),
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 12),
+                    child: Icon(Icons.tune, color: Color(0xFF878787)),
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildFilterChip(
+                    getLang(context, "all"),
+                    "",
+                    selectedFilter,
+                    _updateFilter,
+                    context,
+                  ),
+                  SizedBox(width: 12),
+                  _buildFilterChip(
+                    getLang(context, "burger"),
+                    "images/burger.png",
+                    selectedFilter,
+                    _updateFilter,
+                    context,
+                  ),
+                  SizedBox(width: 12),
+                  _buildFilterChip(
+                    getLang(context, "pizza"),
+                    "images/pizzaa.png",
+                    selectedFilter,
+                    _updateFilter,
+                    context,
+                  ),
+                  SizedBox(width: 12),
+                  _buildFilterChip(
+                    getLang(context, "sandwich"),
+                    "images/sandwich.png",
+                    selectedFilter,
+                    _updateFilter,
+                    context,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Stack(
+              children: [
+                Container(
+                  width: 410,
+                  height: 128,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: AssetImage("images/Frame 71.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                Positioned(
+                  top: 26,
+                  left: 7,
+                  child: Container(
+                    width: 150,
+                    height: 38,
+                    alignment: Alignment.center,
+                    child: Text(
+                      getLang(context, "experience_new_dish"),
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        height: 1.0,
+                        color: Color(0xFFF8F8F8),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 72,
+                  left: 14,
+                  child: Container(
+                    width: 127,
+                    height: 29,
+                    alignment: Alignment.center,
+                    child: Text(
+                      getLang(context, "discount_30"),
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                        height: 1.0,
+                        color: Color(0xFFF8F8F8),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(5, (index) {
+                  bool isActive = index == 2;
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    width: isActive ? 20 : 20,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: isActive ? Color(0xFF25AE4B) : Color(0xFFDBF4D1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Text(
+                  getLang(context, "top_rated"),
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    height: 1.0,
+                    letterSpacing: 0,
+                    textBaseline: TextBaseline.alphabetic,
+                    color: Color(0xFF391713),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              height: 220,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: homeProvider.topRated.length,
+                itemBuilder: (context, index) {
+                  final item = homeProvider.topRated[index];
+                  return _buildProductCardFromApi(
+                    context,
+                    item,
+                    index == homeProvider.topRated.length - 1,
+
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 15),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    getLang(context, "recommend"),
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF391713),
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        getLang(context, "view_all"),
+                        style: TextStyle(
+                          color: Color(0xFF25AE4B),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(width: 6),
+                      Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: Color(0xFF25AE4B),
+                        size: 16,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              width: 371,
+              height: 108,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: homeProvider.recommended.length,
+                itemBuilder: (context, index) {
+                  final item = homeProvider.recommended[index];
+                  return _buildRecommendedItemFromApi(item);
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -427,8 +425,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildProductCardFromApi(
-      BuildContext context, TopRatedItem item, bool isLast) {
+
+  Widget _buildProductCardFromApi(BuildContext context, TopRatedItem item
+      ,bool isLast)
+  {
+
     return Container(
       width: 155,
       height: 250,
@@ -448,6 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icon(Icons.star, color: Colors.orange, size: 16),
                 SizedBox(width: 3),
                 Text(
+
                   item.rating.toString(),
                   style: GoogleFonts.poppins(
                     fontSize: 12,
@@ -459,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             ClipRRect(
               child: Image.network(
-                item.image ?? '',
+                item.imagePath,
                 width: 112,
                 height: 76,
                 fit: BoxFit.cover,
@@ -471,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: double.infinity,
               child: Text(
-                item.nameEn ?? '',
+                item.nameEn,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -484,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 2),
             Text(
-              item.descriptionEn ?? '',
+              item.descriptionEn,
               style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
@@ -546,16 +548,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              item.image,
+              item.imagePath,
               fit: BoxFit.cover,
               width: 72,
               height: 108,
-              errorBuilder: (context, error, stackTrace) => Container(
-                width: 72,
-                height: 108,
-                color: Colors.grey[200],
-                child: Icon(Icons.error, color: Colors.red),
-              ),
+              errorBuilder: (context, error, stackTrace) =>
+                  Container(
+                    width: 72,
+                    height: 108,
+                    color: Colors.grey[200],
+                    child: Icon(Icons.error, color: Colors.red),
+                  ),
             ),
           ),
           Align(
@@ -571,8 +574,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Text(
                 "${item.price} JD",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -581,13 +584,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFilterChip(
-    String label,
-    String imagePath,
-    String selectedFilter,
-    Function(String) onFilterSelected,
-    BuildContext context,
-  ) {
+
+  Widget _buildFilterChip(String label,
+      String imagePath,
+      String selectedFilter,
+      Function(String) onFilterSelected,
+      BuildContext context,) {
     bool isSelected = selectedFilter == label;
     return GestureDetector(
       onTap: () {
@@ -632,103 +634,146 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+
+
   Widget _buildNotificationsList(ScrollController scrollController) {
-    final apiService = ApiService();
-    return FutureBuilder<List<NotificationModel>>(
-      future: apiService.fetchNotifications(1),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Notifications failed to load'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No Notifications'));
-        }
-
-        final allNotifications = snapshot.data!;
-
-        return DefaultTabController(
-          length: 3,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  "Notifications",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(height: 16),
-                TabBar(
-                  labelColor: Colors.green,
-                  indicatorColor: Colors.green,
-                  indicatorWeight: 3,
-                  tabs: [
-                    Tab(text: "All"),
-                    Tab(text: "Unread"),
-                    Tab(text: "Read"),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      _buildNotificationListByType(allNotifications, "all"),
-                      _buildNotificationListByType(allNotifications, "unread"),
-                      _buildNotificationListByType(allNotifications, "read"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  return Builder(
+  builder: (context) => DefaultTabController(
+  length: 3,
+  child: Padding(
+  padding: const EdgeInsets.all(16.0),
+  child: Column(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+  Text(
+  getLang(context, "notifications"),
+  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+  ),
+  SizedBox(height: 16),
+  TabBar(
+  labelColor: Colors.green,
+  unselectedLabelColor: Colors.black,
+  indicatorColor: Colors.green,
+  indicatorWeight: 3,
+  tabs: [
+  Tab(text: getLang(context, "all")),
+  Tab(text: getLang(context, "unread")),
+  Tab(text: getLang(context, "read")),
+  ],
+  ),
+  SizedBox(height: 16),
+  Expanded(
+  child: TabBarView(
+  children: [
+  _buildNotificationListByType(context, "all"),
+  _buildNotificationListByType(context, "unread"),
+  _buildNotificationListByType(context, "read"),
+  ],
+  ),
+  ),
+  ],
+  ),
+  ),
+  ),
+  );
   }
 
-  Widget _buildNotificationListByType(
-      List<NotificationModel> allNotifications, String type) {
-    List<NotificationModel> filtered;
+  Widget _buildNotificationListByType(BuildContext context, String type) {
+  List<NotificationItem> allNotifications = _buildAllNotifications(context);
 
-    if (type == "unread") {
-      filtered = allNotifications.where((n) => !n.isRead).toList();
-    } else if (type == "read") {
-      filtered = allNotifications.where((n) => n.isRead).toList();
-    } else {
-      filtered = allNotifications;
-    }
+  List<NotificationItem> filteredNotifications;
 
-    return ListView.builder(
-      itemCount: filtered.length,
-      itemBuilder: (context, index) {
-        final notification = filtered[index];
-        return _buildNotificationItem(
-          notification.title,
-          notification.message,
-          "${notification.createdAt.year}-${notification.createdAt.month.toString().padLeft(2, '0')}-${notification.createdAt.day.toString().padLeft(2, '0')} "
-          "${notification.createdAt.hour.toString().padLeft(2, '0')}:${notification.createdAt.minute.toString().padLeft(2, '0')}",
-        );
-      },
-    );
+  if (type == "unread") {
+  filteredNotifications =
+  allNotifications.where((n) => !n.isRead).toList();
+  } else if (type == "read") {
+  filteredNotifications =
+  allNotifications.where((n) => n.isRead).toList();
+  } else {
+  filteredNotifications = allNotifications;
+  }
+
+  return ListView.builder(
+  itemCount: filteredNotifications.length,
+  itemBuilder: (context, index) {
+  final notification = filteredNotifications[index];
+  return _buildNotificationItem(
+  notification.title,
+  notification.message,
+  notification.date,
+  );
+  },
+  controller: ScrollController(),
+  );
   }
 
   Widget _buildNotificationItem(String title, String message, String date) {
-    return ListTile(
-      title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(message),
-          if (date.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                date,
-                style: TextStyle(color: Colors.grey, fontSize: 12),
-              ),
-            ),
-        ],
-      ),
-    );
+  return ListTile(
+  title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+  subtitle: Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+  Text(message),
+  if (date.isNotEmpty)
+  Padding(
+  padding: const EdgeInsets.only(top: 4.0),
+  child: Text(
+  date,
+  style: TextStyle(color: Colors.grey, fontSize: 12),
+  ),
+  ),
+  ],
+  ),
+  );
   }
+}
+class NotificationItem {
+  final String title;
+  final String message;
+  final String date;
+  final bool isRead;
+
+  NotificationItem({
+    required this.title,
+    required this.message,
+    required this.date,
+    required this.isRead,
+  });
+}
+
+List<NotificationItem> _buildAllNotifications(BuildContext context) {
+  return [
+    NotificationItem(
+      title: getLang(context, "delayed_order"),
+      message: getLang(context, "delayed_order_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: false,
+    ),
+    NotificationItem(
+      title: getLang(context, "promotional_offer"),
+      message: getLang(context, "promotional_offer_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: true,
+    ),
+    NotificationItem(
+      title: getLang(context, "out_for_delivery"),
+      message: getLang(context, "out_for_delivery_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: false,
+    ),
+    NotificationItem(
+      title: getLang(context, "order_confirmation"),
+      message: getLang(context, "order_confirmation_msg"),
+      date: getLang(context, "last Wednesday at 9:42 AM"),
+      isRead: true,
+    ),
+
+    NotificationItem(
+      title: getLang(context, "delivered"),
+      message: getLang(context, "delivered_msg"),
+      date: "",
+      isRead: true,
+    ),
+  ];
 }

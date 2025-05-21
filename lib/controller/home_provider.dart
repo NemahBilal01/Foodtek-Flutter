@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import '../model/postman_model.dart';
 import '../services/apiService.dart';
 
+
 class HomeProvider with ChangeNotifier {
-  final ApiService _apiService = ApiService();
+
   bool isLoading = true;
   String? error;
+
 
   List<Category> categories = [];
   List<TopRatedItem> topRated = [];
@@ -19,10 +21,11 @@ class HomeProvider with ChangeNotifier {
 
       notifyListeners();
 
-      categories = await _apiService.fetchCategories();
-      topRated = await _apiService.fetchTopRatedItems();
-      recommended = await _apiService.fetchTopRecommendedItems();
-      offers = await _apiService.fetchOffers();
+      categories = await ApiService.fetchCategories();
+      topRated = await ApiService.fetchTopRatedItems();
+      recommended = await ApiService.fetchTopRecommendedItems();
+      offers = await ApiService.fetchOffers();
+
     } catch (e) {
       error = e.toString();
     } finally {
@@ -31,3 +34,4 @@ class HomeProvider with ChangeNotifier {
     }
   }
 }
+

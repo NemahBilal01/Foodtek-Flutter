@@ -1,79 +1,32 @@
-import 'dart:convert';
 import 'package:firebasewithnotification/view/Widget/common_layout_bottomnavbaronly.dart';
 import 'package:firebasewithnotification/view/screens/chat_screen.dart';
+import 'package:firebasewithnotification/view/screens/profile2_screen.dart';
 import 'package:firebasewithnotification/view/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-
 import '../../components/applocal.dart';
 
 class DeliveryHeroPage extends StatefulWidget {
-  final int orderId;
-
-  DeliveryHeroPage({required this.orderId});
-
   @override
   _DeliveryHeroPageState createState() => _DeliveryHeroPageState();
 }
 
 class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
   late GoogleMapController _mapController;
-  LatLng _center = LatLng(31.9500, 35.9330);
-  List<LatLng> _routeCoordinates = [];
+  late LatLng _center;
+
+  final List<LatLng> _routeCoordinates = [
+    LatLng(31.9500, 35.9330),
+    LatLng(31.9631, 35.9332),
+    LatLng(31.9650, 35.9335),
+  ];
 
   @override
   void initState() {
     super.initState();
-    fetchTrackingData();
-  }
-
-  Future<void> fetchTrackingData() async {
-    final url = Uri.parse('http://172.233.67.77:2020/api/delivery-tracking');
-
-    try {
-      final double latitude = 31.9500;
-      final double longitude = 35.9330;
-
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'order_id': widget.orderId,
-          'latitude': latitude,
-          'longitude': longitude,
-        }),
-      );
-      if (response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-
-        if (data['data'] != null &&
-            data['data']['latitude'] != null &&
-            data['data']['longitude'] != null) {
-          final tracking = data['data'];
-          double lat = double.tryParse(tracking['latitude'].toString()) ?? 0.0;
-          double lng = double.tryParse(tracking['longitude'].toString()) ?? 0.0;
-
-          if (lat != 0.0 && lng != 0.0) {
-            setState(() {
-              _routeCoordinates = [LatLng(lat, lng)];
-              _center = LatLng(lat, lng);
-            });
-          } else {
-            print('Invalid latitude/longitude format.');
-          }
-        } else {
-          print('Tracking data is incomplete: ${data['data']}');
-        }
-      } else {
-        print(
-            'Failed to load tracking data. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching tracking data: $e');
-    }
+    _center = _routeCoordinates[0];
   }
 
   @override
@@ -105,12 +58,16 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         height: 1.5,
+                        letterSpacing: 0,
                         color: Color(0xFF878787),
                       ),
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: 1.5, top: 1.5),
-                        child: Icon(Icons.search,
-                            color: Color(0xFF25AE4B), size: 22),
+                        child: Icon(
+                          Icons.search,
+                          color: Color(0xFF25AE4B),
+                          size: 22,
+                        ),
                       ),
                       filled: true,
                       fillColor: Colors.white,
@@ -159,22 +116,28 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(getLang(context, "on_the_way"),
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(
+            getLang(context, "on_the_way"),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileScreen()));
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    );
                   },
                   child: Text(
                     getLang(context, "all_details"),
                     style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF25AE4B)),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF25AE4B),
+                    ),
                   ),
                 ),
               ],
@@ -183,35 +146,90 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildStatusStep(getLang(context, "order_placed"), true),
-                _buildStatusStep(getLang(context, "on_the_way"), true,
-                    isPartial: true),
-                _buildStatusStep(getLang(context, "delivered"), false),
+                // Order Placed
+                Column(
+                  children: [
+                    Text(
+                      getLang(context, "order_placed"),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0XFF878787),
+                      ),
+                    ),
+                    Container(width: 100, height: 5, color: Color(0xFF25AE4B)),
+                  ],
+                ),
+                // On The Way
+                Column(
+                  children: [
+                    Text(
+                      getLang(context, "on_the_way"),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0XFF878787),
+                      ),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 5,
+                      color: Color(0xFF25AE4B).withOpacity(0.5),
+                    ),
+                  ],
+                ),
+                // Delivered
+                Column(
+                  children: [
+                    Text(
+                      getLang(context, "delivered"),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0XFF878787),
+                      ),
+                    ),
+                    Container(width: 100, height: 5, color: Colors.grey),
+                  ],
+                ),
               ],
             ),
             SizedBox(height: 30),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('images/Courier.png')),
+                  radius: 20,
+                  backgroundImage: AssetImage('images/Courier.png'),
+                ),
                 SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(getLang(context, "your_delivery_hero"),
-                          style: TextStyle(
-                              fontSize: 12, color: Color(0XFF878787))),
-                      Text(getLang(context, "aleksandr V."),
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w400)),
+                      Text(
+                        getLang(context,  "your_delivery_hero"),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0XFF878787),
+                        ),
+                      ),
+                      Text(
+                        getLang(context, "aleksandr V."),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0XFF2F2E36),
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                       RatingBarIndicator(
                         rating: 4.9,
                         itemBuilder: (context, index) =>
                             Icon(Icons.star, color: Color(0XFFF2AB58)),
                         itemCount: 5,
                         itemSize: 16.0,
+                        direction: Axis.horizontal,
                       ),
                     ],
                   ),
@@ -227,8 +245,10 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
                 SizedBox(width: 4),
                 IconButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChatScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatScreen()),
+                    );
                   },
                   icon: CircleAvatar(
                     radius: 20,
@@ -242,20 +262,24 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(getLang(context, "your location"),
-                    style: TextStyle(fontSize: 12, color: Color(0XFF878787))),
+                Text(
+                  getLang(context, "your location"),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0XFF878787),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(Icons.location_on_outlined),
-                    Flexible(
-                      child: Text(
-                        getLang(context,
-                            "123 al-madina Street, Abdali, Amman, Jordan"),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0XFF6C7278)),
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      getLang(context, "123 al-madina Street, Abdali, Amman, Jordan"),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Color(0XFF6C7278),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -268,73 +292,37 @@ class _DeliveryHeroPageState extends State<DeliveryHeroPage> {
     );
   }
 
-  Widget _buildStatusStep(String label, bool completed,
-      {bool isPartial = false}) {
-    return Column(
-      children: [
-        Text(label,
-            style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Color(0XFF878787))),
-        Container(
-          width: 100,
-          height: 5,
-          color: completed
-              ? (isPartial
-                  ? Color(0xFF25AE4B).withOpacity(0.5)
-                  : Color(0xFF25AE4B))
-              : Colors.grey,
-        ),
-      ],
-    );
-  }
-
   Set<Marker> _createMarkers() {
-    if (_routeCoordinates.isEmpty) return {};
-
     return {
       Marker(
-        markerId: MarkerId('delivery_location'),
+        markerId: MarkerId('home'),
         position: _routeCoordinates[0],
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        infoWindow: InfoWindow(title: getLang(context, "current_location")),
+        infoWindow: InfoWindow(title: getLang(context, "home")),
+      ),
+      Marker(
+        markerId: MarkerId('car_start'),
+        position: _routeCoordinates[1],
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow: InfoWindow(title: getLang(context, 'car_start')),
+      ),
+      Marker(
+        markerId: MarkerId('car_end'),
+        position: _routeCoordinates[2],
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow: InfoWindow(title: getLang(context, 'car_end')),
       ),
     };
   }
 
   Set<Polyline> _createPolylines() {
-    return {};
+    return {
+      Polyline(
+        polylineId: PolylineId('route'),
+        points: _routeCoordinates,
+        color: Color(0xFF25AE4B),
+        width: 5,
+      ),
+    };
   }
 }
-
-// Set<Marker> _createMarkers() {
-//   if (_routeCoordinates.length < 2) return {};
-//
-//   return {
-//     Marker(
-//       markerId: MarkerId('start'),
-//       position: _routeCoordinates.first,
-//       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-//       infoWindow: InfoWindow(title: getLang(context, "start")),
-//     ),
-//     Marker(
-//       markerId: MarkerId('end'),
-//       position: _routeCoordinates.last,
-//       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-//       infoWindow: InfoWindow(title: getLang(context, "destination")),
-//     ),
-//   };
-// }
-
-//   Set<Polyline> _createPolylines() {
-//     if (_routeCoordinates.length < 2) return {};
-//     return {
-//       Polyline(
-//         polylineId: PolylineId('route'),
-//         points: _routeCoordinates,
-//         color: Color(0xFF25AE4B),
-//         width: 5,
-//       ),
-//     };
-//   }

@@ -94,8 +94,8 @@ class OrderSuccessScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DeliveryHeroPage(orderId:123),
-                ));
+                  MaterialPageRoute(builder: (context) => DeliveryHeroPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF25AE4B),

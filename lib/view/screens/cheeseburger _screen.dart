@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:firebasewithnotification/helpers/auth_storage.dart';
 
 import '../../components/applocal.dart';
+import '../../services/apiService.dart';
 
 class CheeseburgerDetailsScreen extends StatefulWidget {
   const CheeseburgerDetailsScreen({super.key});
@@ -241,21 +243,34 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
               SizedBox(height: 20),
               // Add to Cart Button
               Padding(
-                padding: const EdgeInsets.only(top: 10,left: 24,bottom: 10,right: 24),
+                padding: const EdgeInsets.only(top: 10, left: 24, bottom: 10, right: 24),
                 child: ElevatedButton(
-                  onPressed: () {
-                    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+                  onPressed: () async {
+                    try {
+                      final token = await AuthStorage.getToken();
+                      final userId = await AuthStorage.getUserId();
 
-                    cartProvider.addToCart({
-                      'name': getLang(context, "chicken_burger_alt"),
-                      'price': 20,
-                      'image': 'images/Chicken Burger.png',
-                    });
+                      if (token == null || userId == null) {
+                        throw Exception('User not logged in');
+                      }
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartAndHistoryScreen()),
-                    );
+                      final addedItem = await ApiService.addToCart(
+                        userId: userId,
+                        foodItemId: 7,
+                        quantity: 3,
+                        token: token,
+                      );
+
+                      final cartProvider = Provider.of<CartProvider>(context, listen: false);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CartAndHistoryScreen()),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Failed added to cart: ${e.toString()}')),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0XFF25AE4B),
@@ -264,10 +279,15 @@ class _CheeseburgerDetailsScreenState extends State<CheeseburgerDetailsScreen> {
                   ),
                   child: Text(
                     getLang(context, "add_to_cart"),
-                    style: GoogleFonts.poppins(color: Colors.white, fontSize: 14,fontWeight: FontWeight.w500),
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
+
               SizedBox(height: 20),
             ],
           ),

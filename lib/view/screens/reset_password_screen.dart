@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasewithnotification/components/applocal.dart';
-import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
 import 'package:firebasewithnotification/view/screens/verify_code_screen.dart';
 import 'package:firebasewithnotification/components/applocal.dart';
@@ -21,8 +20,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Future<void> sendPasswordResetEmail() async {
     if (formKey.currentState!.validate()) {
       try {
-        await ApiService().forgotPassword(emailController.text.trim());
-
+        await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: emailController.text.trim(),
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(getLang(context,  "password reset email sent!"))),
         );
@@ -139,7 +139,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      labelText: getLang(context, "Email"),
+                      labelText: getLang(context, "login"),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       border: OutlineInputBorder(),
                     ),
@@ -157,7 +157,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: sendPasswordResetEmail,
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      sendPasswordResetEmail();
+                      FirebaseAuth.instance.sendPasswordResetEmail(
+                          email: emailController.text.trim());
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyCodeScreen()),
+                      );
+                    }
+                  },
                   child: Text(
                     getLang(context, "send"),
                     style: TextStyle(fontSize: 14, color: Colors.white),

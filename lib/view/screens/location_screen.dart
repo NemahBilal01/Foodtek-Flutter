@@ -1,11 +1,11 @@
 import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/checkout_screen.dart';
+import 'package:firebasewithnotification/view/widget/common_layout_bottomnavbaronly.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../components/applocal.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -15,11 +15,9 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   late GoogleMapController mapController;
 
-  // final LatLng targetLocation = LatLng(31.963158, 35.934305);
-  final TextEditingController locationController = TextEditingController();
-  final LatLng courierLocation = LatLng(31.9628, 35.9340);
-  LatLng? clientLocation;
 
+  final LatLng targetLocation = LatLng(31.963158, 35.934305);
+  final LatLng courierLocation = LatLng(31.9628, 35.9340);
 
   String address = "";
 
@@ -28,49 +26,31 @@ class _LocationScreenState extends State<LocationScreen> {
   Set<Polyline> _polylines = {};
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        address = getLang(context, "123 al-madina Street, Abdali, Amman, Jordan");
+      });
+    });
+
+    final dashedPoints = _generateDashedPath(
+      courierLocation,
+      targetLocation,
+    );
+
+    _polylines.add(
+      Polyline(
+        polylineId: PolylineId(getLang(context, "dashed_line")),
+        points: dashedPoints,
+        width: 3,
+        color: Colors.green,
+        patterns: [PatternItem.dash(5), PatternItem.gap(5)],
+      ),
+    );
+
     _loadCustomMarkers();
     _loadCircles();
-    if (clientLocation != null) {
-      final dashedPoints =
-          _generateDashedPath(courierLocation, clientLocation!);
-      _polylines.add(
-        Polyline(
-          polylineId: PolylineId(getLang(context, "dashed_line")),
-          points: dashedPoints,
-          width: 3,
-          color: Colors.green,
-          patterns: [PatternItem.dash(5), PatternItem.gap(5)],
-        ),
-      );
-    }
-  }
-
-  Future<void> fetchAddressFromLatLng(LatLng latLng) async {
-    final apiKey = 'AIzaSyA5favoEawVDiuCvW1gkSF2H_KZwN11vkE';
-    final url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data['results'] != null && data['results'].length > 0) {
-          setState(() {
-            address = data['results'][0]['formatted_address'];
-            locationController.text = address;
-          });
-        } else {
-          print("No results found.");
-        }
-      } else {
-        print("Failed to fetch address: ${response.statusCode}");
-      }
-    } catch (e) {
-      print("Error fetching address: $e");
-    }
   }
 
   Future<void> _loadCustomMarkers() async {
@@ -79,10 +59,10 @@ class _LocationScreenState extends State<LocationScreen> {
       'images/Courier.png',
     );
 
-    // final targetIcon = await BitmapDescriptor.fromAssetImage(
-    //   ImageConfiguration(size: Size(80, 80)),
-    //   'images/A.png',
-    // );
+    final targetIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(80, 80)),
+      'images/A.png',
+    );
 
     setState(() {
       _markers.addAll({
@@ -92,12 +72,12 @@ class _LocationScreenState extends State<LocationScreen> {
           icon: courierIcon,
           infoWindow: InfoWindow(title: getLang(context, "driver")),
         ),
-        // Marker(
-        //   markerId: MarkerId('target'),
-        //   position: targetLocation,
-        //   icon: targetIcon,
-        //   infoWindow: InfoWindow(title: getLang(context, "destination")),
-        // ),
+        Marker(
+          markerId: MarkerId('target'),
+          position: targetLocation,
+          icon: targetIcon,
+          infoWindow: InfoWindow(title: getLang(context, "destination")),
+        ),
       });
     });
   }
@@ -107,7 +87,7 @@ class _LocationScreenState extends State<LocationScreen> {
       _circles.add(
         Circle(
           circleId: CircleId('location_circle'),
-          center: courierLocation,
+          center: targetLocation,
           radius: 60,
           fillColor: Colors.green.withOpacity(0.2),
           strokeWidth: 0,
@@ -135,38 +115,6 @@ class _LocationScreenState extends State<LocationScreen> {
     mapController = controller;
   }
 
-  void _onMapTapped(LatLng newPosition) async {
-    setState(() {
-      clientLocation = newPosition;
-
-      _markers.removeWhere((m) => m.markerId.value == 'target');
-
-      _markers.add(
-        Marker(
-          markerId: MarkerId('target'),
-          position: newPosition,
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-          infoWindow: InfoWindow(title: getLang(context, "destination")),
-        ),
-      );
-
-      _polylines.clear();
-      final dashedPoints = _generateDashedPath(courierLocation, newPosition);
-      _polylines.add(
-        Polyline(
-          polylineId: PolylineId(getLang(context, "dashed_line")),
-          points: dashedPoints,
-          width: 3,
-          color: Colors.green,
-          patterns: [PatternItem.dash(5), PatternItem.gap(5)],
-        ),
-      );
-    });
-
-    await fetchAddressFromLatLng(newPosition);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,14 +124,14 @@ class _LocationScreenState extends State<LocationScreen> {
             mapType: MapType.normal,
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
-              target: courierLocation,
+              target: targetLocation,
               zoom: 17.0,
             ),
             markers: _markers,
             polylines: _polylines,
             circles: _circles,
-            onTap: _onMapTapped,
           ),
+
           Positioned(
             top: 40,
             left: 20,
@@ -202,8 +150,6 @@ class _LocationScreenState extends State<LocationScreen> {
                 SizedBox(width: 10),
                 Expanded(
                   child: TextField(
-                    readOnly: true,
-                    controller: TextEditingController(text: address),
                     decoration: InputDecoration(
                       hintText: getLang(context, "find your location"),
                       hintStyle: GoogleFonts.inter(
@@ -233,6 +179,7 @@ class _LocationScreenState extends State<LocationScreen> {
               ],
             ),
           ),
+
           Positioned(
             bottom: 70,
             left: 20,
@@ -264,18 +211,12 @@ class _LocationScreenState extends State<LocationScreen> {
                         Icon(Icons.location_on_outlined, color: Colors.green),
                         SizedBox(width: 1),
                         Expanded(
-                          child: TextField(
-                            controller: locationController,
-                            readOnly: true,
+                          child: Text(
+                            address,
                             style: TextStyle(
                               color: Color(0xFF6C7278),
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              isDense: true,
-                              contentPadding: EdgeInsets.zero,
                             ),
                           ),
                         ),

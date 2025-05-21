@@ -5,7 +5,7 @@
     "skip": "Skip",
     "get delivery on time": "get delivery on time",
     "order your favourite food": "Order Your Favourite Food Within The Palm Of Your Hand And The Zone Of Your Comfort",
-     "choose your food": "Choose Your Food",
+    "choose your food": "Choose Your Food",
     "turn on your location": "Turn On Your Location",
     "to continues location": "To Continues,Let Your Device Turn On Location,Which Uses Google's Location Service",
     "yes,turn it on": "Yes, Turn It On",
@@ -23,7 +23,7 @@
     "password": "Password",
     "already have an account?": "Already have an account?",
     "full name": "Full Name",
-    "signup Successful!":"Signup Successful!",
+    "signup Successful!": "Signup Successful!",
     "user already exists!": "User already exists!",
     "register": "Register",
     "birth of date": "Birth of date",
@@ -52,8 +52,6 @@
     "please confirm your password": "Please confirm your password",
     "passwords do not match": "Passwords do not match",
     "update Password": "Update Password",
-
-
     "last Wednesday at 9:42 AM": "Last Wednesday at 9:42 AM",
     "sandwich": "Sandwich",
     "pizza": " Pizza",
@@ -89,7 +87,6 @@
     "order_confirmation_msg": "Your order has been placed! 🍔 We're preparing it now. Track your order live!",
     "delivered": "Delivered:",
     "delivered_msg": "Enjoy your meal! 🍕 Your order has been delivered. Rate your experience!",
-
     "order_now": "Order Now",
     "pepperoni_pizza_name": "Pepperoni Pizza",
     "pepperoni_pizza_desc": "Pepperoni pizza, Margarita Pizza Margherita Italian cuisine Tomato",
@@ -99,14 +96,12 @@
     "peppy_paneer_desc": "Chunky paneer with crisp capsicum and spicy red pepper",
     "mexican_green_wave_name": "Mexican Green Wave",
     "mexican_green_wave_desc": "A pizza loaded with crunchy onions, crisp capsicum, juicy tomatoes",
-
     "profile": "Profile",
     "my_account": "My Account",
     "personal_info": "Personal information",
     "language": "Language",
     "privacy_policy": "Privacy Policy",
     "setting": "Setting",
-
     "push_notifications": "Push Notifications",
     "promo_notifications": "Promotional Notifications",
     "more": "More",
@@ -116,7 +111,6 @@
     "username": "Username",
     "update": "Update",
     "checkout": "Checkout",
-
     "order_confirmation_message": "You will get your order within 12 min.\nThanks for using our services",
     "track Your Order": "Track Your Order",
     "order Details": "Order Details",
@@ -149,7 +143,6 @@
     "min": "Min",
     "max": "Max",
     "discount": "Discount",
-
     "category": "Category",
     "location": "Location",
     "dish": "Dish",
@@ -185,7 +178,6 @@
     "hot": "Hot",
     "quantity": "Quantity",
     "add_to_cart": "Add To Cart",
-
     "address details": "5 Noe Zhordania St",
     "payment_method": "Card",
     "card_type": "MasterCard",
@@ -215,17 +207,14 @@
     "Write Your Message": "Write Your Message",
     "Cart Empty": "Cart Empty",
     "You don’t have any food in your cart at this time.": "You don’t have any food in your cart at this time.",
-
     "no_name": "No Name",
     "unknown_restaurant": "Unknown Restaurant",
     "sub_total": "Sub-Total",
     "delivery_charge": "Delivery Charge",
     "total": "Total:",
-
     "current_location": "Current location",
     "address_example": "Jl. Soekarno Hatta 15A...",
     "cart": "Cart",
-
     "add_card": "Add Card",
     "name": "Name",
     "card_number": "Card Number",
@@ -233,8 +222,12 @@
     "cvc": "CVC",
     "order_details_email": "We will send you an order details to your email after the successful payment",
     "pay_for_order": "Pay for the order",
-    "notifications_failed_to_load": "Notifications failed to load",
-    "no_notifications": "No Notifications"
-
-
+    "pastries": "Pastries",
+    "ِarabic": "Arabic",
+    "shawrma": "Shawarma",
+    "Pasta": "Pasta",
+    "waffles": "Waffles",
+    "juices": "Juices",
+    "Failed to load categories": "Failed to load categories",
+    "There are no categories": "There are no categories"
 }

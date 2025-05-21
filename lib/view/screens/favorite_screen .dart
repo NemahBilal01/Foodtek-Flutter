@@ -1,4 +1,5 @@
 import 'package:firebasewithnotification/controller/favorite_provider.dart';
+import 'package:firebasewithnotification/helpers/auth_storage.dart';
 import 'package:firebasewithnotification/view/widget/common_layout_withoutfilterclips.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,81 +7,53 @@ import 'package:provider/provider.dart';
 import 'dart:ui';
 
 import '../../components/applocal.dart';
+import '../../model/postman_model.dart';
+import '../../services/apiService.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+  bool _isLoaded = false;
+  void didChangeDependencies() {
+    if (!_isLoaded) {
+      Provider.of<FavoriteProvider>(context, listen: false).fetchFavorites();
+      _isLoaded = true;
+    }
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<FavoriteProvider>(
       builder: (context, favoriteProvider, child) {
-        final favoritePizzas =
-            favoriteProvider.favoritePizzas.where((pizza) {
-              final category =
-                  pizza['category']?.toString().toLowerCase() ?? '';
-              return ![
-                getLang(context, "all").toLowerCase(),
-                getLang(context, "burger").toLowerCase(),
-                getLang(context, "pizza").toLowerCase(),
-                getLang(context, "sandwich").toLowerCase()
-              ].contains(category);
-            }).toList();
+        final favoriteItems = favoriteProvider.favoriteItems;
 
         return CommonLayoutWithoutfilterclips(
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 5),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-                child: Text(
-                  getLang(context, "favorites"),
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: Color(0xFF391713),
-                  ),
-                ),
+              SizedBox(height: 20),
+              Text(
+                getLang(context, "favorites"),
+                style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 20),
               ),
-
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+                child: favoriteItems.isEmpty
+                    ? Center(child: Text(getLang(context, "no_favorite_items_yet")))
+                    : GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 0.8,
                   ),
-                  child:
-                      favoritePizzas.isEmpty
-                          ? Center(
-                            child: Text(
-                              getLang(context, "no_favorite_items_yet"),
-                              style: GoogleFonts.sora(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          )
-                          : GridView.builder(
-                            shrinkWrap: false,
-                            physics: BouncingScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 1,
-                                  mainAxisSpacing: 35,
-                                  childAspectRatio: 0.8,
-                                ),
-                            itemCount: favoritePizzas.length,
-                            itemBuilder: (context, index) {
-                              return _buildPizzaCard(
-                                context,
-                                favoritePizzas[index],
-                              );
-                            },
-                          ),
+                  itemCount: favoriteItems.length,
+                  itemBuilder: (context, index) {
+                    return _buildPizzaCard(context, favoriteItems[index]);
+                  },
                 ),
               ),
             ],
@@ -92,8 +65,10 @@ class FavoriteScreen extends StatelessWidget {
 
   Widget _buildPizzaCard(BuildContext context, Map<String, dynamic> pizza) {
     return Consumer<FavoriteProvider>(
-      builder: (context, favoriteProvider, child) {
-        bool isFav = favoriteProvider.isFavorite(pizza);
+      builder: (context, provider, child) {
+        final isFav = provider.isFavorite(pizza);
+
+
 
         return Stack(
           clipBehavior: Clip.none,
@@ -169,15 +144,42 @@ class FavoriteScreen extends StatelessWidget {
               left: 50,
               child: CircleAvatar(
                 radius: 40,
-                backgroundImage: AssetImage(pizza['image']),
+                backgroundImage: NetworkImage(pizza['imagePath']??'https://via.placeholder.com/640x450.png/0099ff?text=food+consequatur'),
+
               ),
             ),
             Positioned(
               top: -10,
               right: 10,
               child: GestureDetector(
-                onTap:
-                    () => _showRemoveDialog(context, favoriteProvider, pizza),
+                onTap: () async {
+                  final token = await  AuthStorage.getToken();
+                  final userId = await AuthStorage.getUserId();
+                  if (token == null || userId == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('You must be logged in')),
+                    );
+                    return;
+                  }
+
+                  if (isFav) {
+
+                    _showRemoveDialog(context, provider, pizza, userId, token);
+                  } else {
+                    try {
+                      await ApiService.addToFavorites(
+                        userId: userId,
+                        foodItemId: pizza['id'],
+                        token: token,
+                      );
+                      provider.toggleFavorite(pizza);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Failed to add to favorites')),
+                      );
+                    }
+                  }
+                },
 
                 child: Container(
                   width: 35,
@@ -204,7 +206,8 @@ class FavoriteScreen extends StatelessWidget {
 void _showRemoveDialog(
   BuildContext context,
   FavoriteProvider provider,
-  Map<String, dynamic> pizza,
+  Map<String, dynamic> pizza, int userId, String token,
+
 ) {
   showDialog(
     context: context,
