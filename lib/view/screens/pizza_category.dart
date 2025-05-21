@@ -2,10 +2,9 @@ import 'package:firebasewithnotification/controller/favorite_provider.dart';
 import 'package:firebasewithnotification/view/widget/common_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart' ;
+import 'package:provider/provider.dart';
 
 import '../../components/applocal.dart';
-
 
 class PizzaCategory extends StatelessWidget {
   final String categoryName;
@@ -109,6 +108,8 @@ class PizzaCategory extends StatelessWidget {
                   Text(
                     pizza['description'],
                     textAlign: TextAlign.left,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.sora(
                       fontSize: 10,
                       fontWeight: FontWeight.w300,

@@ -1,8 +1,6 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/location_section1.dart';
 import 'package:flutter/material.dart';
-import 'location_screen.dart';
-import 'package:firebasewithnotification/components/applocal.dart';
-
 
 class FoodSelectionScreen extends StatelessWidget {
   const FoodSelectionScreen({super.key});
@@ -23,15 +21,12 @@ class FoodSelectionScreen extends StatelessWidget {
               height: 300,
             ),
           ),
-
           Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 220),
-
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Image.asset(
@@ -40,11 +35,9 @@ class FoodSelectionScreen extends StatelessWidget {
                       height: 219,
                     ),
                   ),
-
                   SizedBox(height: 20),
-
                   Container(
-                    width: 335,
+                    // width: 335,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,14 +63,13 @@ class FoodSelectionScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   SizedBox(height: 40),
-
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LocationSection()),
+                        MaterialPageRoute(
+                            builder: (context) => LocationSection()),
                       );
                     },
                     borderRadius: BorderRadius.circular(69),
@@ -105,10 +97,7 @@ class FoodSelectionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 40),
-
-
                   Container(
                     width: 321,
                     height: 26,
@@ -119,7 +108,8 @@ class FoodSelectionScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => LocationSection()),
+                              MaterialPageRoute(
+                                  builder: (context) => LocationSection()),
                             );
                           },
                           child: Text(
@@ -131,30 +121,32 @@ class FoodSelectionScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Row(
                           children: [
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.green),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.green),
                           ],
                         ),
-
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => LocationSection()),
+                              MaterialPageRoute(
+                                  builder: (context) => LocationSection()),
                             );
                           },
-                          child: Icon(Icons.arrow_forward, size: 28, color: Colors.green),
+                          child: Icon(Icons.arrow_forward,
+                              size: 28, color: Colors.green),
                         ),
                       ],
                     ),
                   ),
-
                   SizedBox(height: 20),
                 ],
               ),

@@ -1,9 +1,7 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
 import 'package:firebasewithnotification/view/screens/location_section1.dart';
 import 'package:flutter/material.dart';
-import 'package:firebasewithnotification/components/applocal.dart';
-
-
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -24,15 +22,12 @@ class WelcomeScreen extends StatelessWidget {
               height: 200,
             ),
           ),
-
           Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 220),
-
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Image.asset(
@@ -41,11 +36,9 @@ class WelcomeScreen extends StatelessWidget {
                       height: 328,
                     ),
                   ),
-
                   SizedBox(height: 20),
-
                   Container(
-                    width: 335,
+                    // width: 335,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +53,8 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          getLang(context, "Enjoy _ A Fast And Smooth Food Delivery _ At Your Doorstep"),
+                          getLang(context,
+                              "Enjoy _ A Fast And Smooth Food Delivery _ At Your Doorstep"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -71,14 +65,13 @@ class WelcomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   SizedBox(height: 40),
-
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DeliveryScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => DeliveryScreen()),
                       );
                     },
                     borderRadius: BorderRadius.circular(69),
@@ -95,8 +88,7 @@ class WelcomeScreen extends StatelessWidget {
                         width: 307,
                         height: 48,
                         alignment: Alignment.center,
-                        child:
-                        Text(
+                        child: Text(
                           getLang(context, "continue"),
                           style: TextStyle(
                             fontSize: 16,
@@ -107,10 +99,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 40),
-
-
                   Container(
                     width: 321,
                     height: 26,
@@ -121,7 +110,8 @@ class WelcomeScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => LocationSection()),
+                              MaterialPageRoute(
+                                  builder: (context) => LocationSection()),
                             );
                           },
                           child: Text(
@@ -133,30 +123,32 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Row(
                           children: [
-                            CircleAvatar(radius: 6, backgroundColor: Colors.green),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.green),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                           ],
                         ),
-
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => DeliveryScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => DeliveryScreen()),
                             );
                           },
-                          child: Icon(Icons.arrow_forward, size: 28, color: Colors.green),
+                          child: Icon(Icons.arrow_forward,
+                              size: 28, color: Colors.green),
                         ),
                       ],
                     ),
                   ),
-
                   SizedBox(height: 20),
                 ],
               ),

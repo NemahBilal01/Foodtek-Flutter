@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../model/postman_model.dart';
 
 class ApiEndpoints {
@@ -18,9 +20,9 @@ class ApiService {
   static const Duration timeout = Duration(seconds: 30);
 
   static Map<String, String> get headers => {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  };
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
 
   static Future<T> _handleResponse<T>({
     required http.Response response,
@@ -49,7 +51,7 @@ class ApiService {
   static Future<List<Category>> fetchCategories() async {
     return _fetchList<Category>(
       endpoint: ApiEndpoints.categories,
-      key: 'categories',
+      key: 'data',
       fromJson: (json) => Category.fromJson(json),
       errorMessage: 'Failed to load categories',
     );
@@ -67,7 +69,7 @@ class ApiService {
   static Future<List<TopRatedItem>> fetchTopRatedItems() async {
     return _fetchList<TopRatedItem>(
       endpoint: ApiEndpoints.rating,
-      key: 'topFood',
+      key: 'data',
       fromJson: (json) => TopRatedItem.fromJson(json),
       errorMessage: 'Failed to load top rated items',
     );
@@ -76,7 +78,7 @@ class ApiService {
   static Future<List<RecommendedItem>> fetchTopRecommendedItems() async {
     return _fetchList<RecommendedItem>(
       endpoint: ApiEndpoints.topRecommended,
-      key: 'TopRecommended',
+      key: 'data',
       fromJson: (json) => RecommendedItem.fromJson(json),
       errorMessage: 'Failed to load recommended items',
     );
@@ -85,7 +87,7 @@ class ApiService {
   static Future<List<FoodItem>> fetchItemsByCategory(int categoryId) async {
     return _fetchList<FoodItem>(
       endpoint: '${ApiEndpoints.foodByCategory}/$categoryId',
-      key: 'foodItem',
+      key: 'data',
       fromJson: (json) => FoodItem.fromJson(json),
       errorMessage: 'Failed to load category items',
     );
@@ -94,7 +96,7 @@ class ApiService {
   static Future<List<FavoriteItem>> fetchFavoriteItemsByUser(int userId) async {
     return _fetchList<FavoriteItem>(
       endpoint: '${ApiEndpoints.favorites}/$userId',
-      key: 'favorites',
+      key: 'data',
       fromJson: (json) => FavoriteItem.fromJson(json),
       errorMessage: 'Failed to load favorite items',
     );
@@ -102,10 +104,12 @@ class ApiService {
 
   static Future<FoodItemDetail> fetchFoodItemDetailsById(int itemId) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl${ApiEndpoints.foodItems}/$itemId'),
-        headers: headers,
-      ).timeout(timeout);
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl${ApiEndpoints.foodItems}/$itemId'),
+            headers: headers,
+          )
+          .timeout(timeout);
 
       return _handleResponse<FoodItemDetail>(
         response: response,
@@ -113,7 +117,8 @@ class ApiService {
         customErrorMessage: 'Failed to load item details',
       );
     } catch (e) {
-      throw ApiException(message: 'Failed to load item details: ${e.toString()}');
+      throw ApiException(
+          message: 'Failed to load item details: ${e.toString()}');
     }
   }
 
@@ -124,19 +129,21 @@ class ApiService {
     required String token,
   }) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/cart'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: json.encode({
-          'user_id': userId,
-          'food_item_id': foodItemId,
-          'quantity': quantity,
-        }),
-      ).timeout(timeout);
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/cart'),
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({
+              'user_id': userId,
+              'food_item_id': foodItemId,
+              'quantity': quantity,
+            }),
+          )
+          .timeout(timeout);
 
       return _handleResponse<CartItem>(
         response: response,
@@ -144,7 +151,8 @@ class ApiService {
         customErrorMessage: 'Failed to add item to cart',
       );
     } catch (e) {
-      throw ApiException(message: 'Failed to add item to cart: ${e.toString()}');
+      throw ApiException(
+          message: 'Failed to add item to cart: ${e.toString()}');
     }
   }
 
@@ -154,18 +162,20 @@ class ApiService {
     required String token,
   }) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl${ApiEndpoints.favorites}'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: json.encode({
-          'user_id': userId,
-          'food_item_id': foodItemId,
-        }),
-      ).timeout(timeout);
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl${ApiEndpoints.favorites}'),
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({
+              'user_id': userId,
+              'food_item_id': foodItemId,
+            }),
+          )
+          .timeout(timeout);
 
       return _handleResponse<FavoriteItem>(
         response: response,
@@ -173,11 +183,10 @@ class ApiService {
         customErrorMessage: 'Failed to add favorite item',
       );
     } catch (e) {
-      throw ApiException(message: 'Failed to add favorite item: ${e.toString()}');
+      throw ApiException(
+          message: 'Failed to add favorite item: ${e.toString()}');
     }
   }
-
-
 
   static Future<List<T>> _fetchList<T>({
     required String endpoint,

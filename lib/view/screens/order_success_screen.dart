@@ -1,6 +1,5 @@
 import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/delivery_hero_screen.dart';
-import 'package:firebasewithnotification/view/screens/delivery_screen.dart';
 import 'package:firebasewithnotification/view/widget/common_layoutWithBottomNav.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +34,6 @@ class OrderSuccessScreen extends StatelessWidget {
             child: Container(
               width: 430.5,
               height: 287,
-
               child: Image.asset("images/Group 3154.png", fit: BoxFit.cover),
             ),
           ),
@@ -90,33 +88,34 @@ class OrderSuccessScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DeliveryHeroPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF25AE4B),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DeliveryHeroPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF25AE4B),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+                  minimumSize: Size(327, 58),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 22),
-                minimumSize: Size(327, 58),
-              ),
-              child: Text(
-                getLang(context, "track Your Order"),
-                style: TextStyle(
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  color: Colors.white,
+                child: Text(
+                  getLang(context, "track Your Order"),
+                  style: TextStyle(
+                    fontFamily: "Inter",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-          )],
+          )
+        ],
       ),
     );
   }
