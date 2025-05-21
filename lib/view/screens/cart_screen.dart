@@ -4,10 +4,28 @@ import 'package:firebasewithnotification/view/screens/emptyState_screen.dart';
 import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/applocal.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _loadCartFromServer();
+  }
+
+  Future<void> _loadCartFromServer() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('user_id') ?? '1'; // استخدم ID حقيقي إذا متوفر
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    await cartProvider.loadCartFromApi(userId as int);
+  }
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
@@ -23,8 +41,8 @@ class CartScreen extends StatelessWidget {
                     ? EmptyState(
                         imagePath: 'images/Empty State.png',
                         text: getLang(context, "Cart Empty"),
-                        subText:
-                        getLang(context, "You don’t have any food in your cart at this time."),
+                        subText: getLang(context,
+                            "You don’t have any food in your cart at this time."),
                       )
                     : ListView.builder(
                         itemCount: cartProvider.cartItems.length,
@@ -74,12 +92,18 @@ class CartScreen extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(getLang(context, item['name'] ?? 'no_name'),
+                                          Text(
+                                              getLang(context,
+                                                  item['name'] ?? 'no_name'),
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.black)),
-                                          Text(getLang(context, item['restaurant'] ?? 'unknown_restaurant'),
+                                          Text(
+                                              getLang(
+                                                  context,
+                                                  item['restaurant'] ??
+                                                      'unknown_restaurant'),
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
@@ -145,17 +169,20 @@ class CartScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildPriceRow(getLang(context, 'sub_total'), '\$${cartProvider.getTotalPrice()}'),
-                    _buildPriceRow(getLang(context, 'delivery_charge'), '10 \$'),
+                    _buildPriceRow(getLang(context, 'sub_total'),
+                        '\$${cartProvider.getTotalPrice()}'),
+                    _buildPriceRow(
+                        getLang(context, 'delivery_charge'), '10 \$'),
                     _buildPriceRow(getLang(context, 'discount'), '10 \$'),
-                    _buildPriceRow(getLang(context, 'total'), '\$${cartProvider.getTotalPrice() + 10 - 10}', isTotal: true),
-
+                    _buildPriceRow(getLang(context, 'total'),
+                        '\$${cartProvider.getTotalPrice() + 10 - 10}',
+                        isTotal: true),
                     SizedBox(height: 4),
                     SizedBox(
                       child: Center(
                         child: ElevatedButton(
                           onPressed: () {
-                            final cartProvider = context.read<CartProvider>();
+                            // final cartProvider = context.read<CartProvider>();
                             final orderProvider = context.read<OrderProvider>();
 
                             if (cartProvider.cartItems.isNotEmpty) {
@@ -177,7 +204,7 @@ class CartScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(7),
                             ),
                           ),
-                          child:  Text(
+                          child: Text(
                             getLang(context, 'place_my_order'),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

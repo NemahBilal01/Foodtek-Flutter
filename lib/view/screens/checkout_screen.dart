@@ -23,8 +23,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   late String cardType;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     selectedAddress = getLang(context, "address");
     paymentMethod = getLang(context, "payment_method");

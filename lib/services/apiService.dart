@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:firebasewithnotification/model/postman_model.dart';
+import 'package:firebasewithnotification/view/screens/location_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -550,8 +553,7 @@ class ApiService {
     required int orderId,
     required double latitude,
     required double longitude,
-  }) async
-  {
+  }) async {
     final url = Uri.parse('$baseUrl/delivery-tracking');
 
     final response = await http.post(
@@ -575,20 +577,34 @@ class ApiService {
       return null;
     }
   }
-}
 
-// static Future<List<CartItem>> fetchCartItems(int userId) async {
-// final url = Uri.parse('$baseUrl/cart-items/$userId');
-// final response = await http.get(url);
-//
-// if (response.statusCode == 200) {
-// final data = jsonDecode(response.body);
-// final List items = data['data'];
-// return items.map((item) => CartItem.fromJson(item)).toList();
-// } else {
-// throw Exception('فشل في جلب بيانات السلة');
-// }
-// }
+  Future<List<CartItem>> fetchCartItems(int userId) async {
+    final url = Uri.parse('$baseUrl/cart-items/$userId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonBody = json.decode(response.body);
+      final List data = jsonBody['data'];
+
+      return data.map((item) => CartItem.fromJson(item)).toList();
+    } else {
+      throw Exception("Failed to load basket data");
+    }
+  }
+
+  Future<List<OrderModel>> getUserOrders(int userId) async {
+    final url = Uri.parse('$baseUrl/api/get_user_orders/$userId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List orders = data['data'];
+      return orders.map((order) => OrderModel.fromJson(order)).toList();
+    } else {
+      throw Exception('Failed to load requests');
+    }
+  }
+}
 
 class ApiEndpoints {
   static const String categories = '/categories';

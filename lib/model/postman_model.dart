@@ -553,5 +553,54 @@ class DeliveryTracking {
   }
 }
 
+class CartItem {
+  final int id;
+  final FoodItem foodItem;
+  final int quantity;
+
+  CartItem({
+    required this.id,
+    required this.foodItem,
+    required this.quantity,
+  });
+
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      id: json['id'],
+      foodItem: FoodItem.fromJson(json['food_item']),
+      quantity: json['quantity'],
+    );
+  }
+}
+
+class OrderModel {
+  final int id;
+  final int userId;
+  final String status;
+  final String totalPrice;
+  final String paymentStatus;
+  final int restaurantId;
+
+  OrderModel({
+    required this.id,
+    required this.userId,
+    required this.status,
+    required this.totalPrice,
+    required this.paymentStatus,
+    required this.restaurantId,
+  });
+
+  factory OrderModel.fromJson(Map<String, dynamic> json) {
+    return OrderModel(
+      id: json['id'],
+      userId: json['user_id'],
+      status: json['status'],
+      totalPrice: json['total_price'],
+      paymentStatus: json['payment_status'],
+      restaurantId: json['restaurant_id'],
+    );
+  }
+}
+
 
 
