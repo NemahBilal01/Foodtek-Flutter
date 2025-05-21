@@ -111,4 +111,14 @@ flutter:
     - assets/lang/ar.json
     - assets/lang/en.json
 
+flutter_assets:
+  assets_path: images
+  output_path: lib/
+  filename: app_images.dart
+  field_prefix:
+    from: assetsImages
+    to:
+  ignore_comments: true
+  classname: AppImages
+
 

@@ -1,3 +1,4 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/screens/cheeseburger%20_screen.dart';
 import 'package:firebasewithnotification/view/screens/favorite_screen%20.dart';
@@ -5,7 +6,6 @@ import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:firebasewithnotification/view/screens/pizza_category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/home_provider.dart';
@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
@@ -458,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             ClipRRect(
               child: Image.network(
-                item.image,
+                item.image ?? '',
                 width: 112,
                 height: 76,
                 fit: BoxFit.cover,
@@ -470,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: double.infinity,
               child: Text(
-                item.nameEn,
+                item.nameEn ?? '',
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -483,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 2),
             Text(
-              item.descriptionEn,
+              item.descriptionEn ?? '',
               style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
@@ -630,6 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   Widget _buildNotificationsList(ScrollController scrollController) {
     final apiService = ApiService();
     return FutureBuilder<List<NotificationModel>>(
@@ -684,8 +686,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNotificationListByType(List<NotificationModel> allNotifications,
-      String type) {
+  Widget _buildNotificationListByType(
+      List<NotificationModel> allNotifications, String type) {
     List<NotificationModel> filtered;
 
     if (type == "unread") {
@@ -703,13 +705,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return _buildNotificationItem(
           notification.title,
           notification.message,
-          "${notification.createdAt.year}-${notification.createdAt.month
-              .toString().padLeft(2, '0')}-${notification.createdAt.day
-              .toString()
-              .padLeft(2, '0')} "
-              "${notification.createdAt.hour.toString().padLeft(
-              2, '0')}:${notification.createdAt.minute.toString().padLeft(
-              2, '0')}",
+          "${notification.createdAt.year}-${notification.createdAt.month.toString().padLeft(2, '0')}-${notification.createdAt.day.toString().padLeft(2, '0')} "
+          "${notification.createdAt.hour.toString().padLeft(2, '0')}:${notification.createdAt.minute.toString().padLeft(2, '0')}",
         );
       },
     );
@@ -733,4 +730,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }}
+  }
+}

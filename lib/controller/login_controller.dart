@@ -1,15 +1,14 @@
+import 'dart:developer';
+
 import 'package:firebasewithnotification/model/postman_model.dart';
 import 'package:firebasewithnotification/services/apiService.dart';
 import 'package:firebasewithnotification/view/screens/home_screen.dart';
 import 'package:firebasewithnotification/view/widget/database.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
-import '../view/widget/MainHomeContent.dart';
 
 class LoginController extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
@@ -31,9 +30,8 @@ class LoginController extends ChangeNotifier {
         context,
         MaterialPageRoute(builder: (_) => HomeScreen()),
       );
-
     } else {
-      ScaffoldMessenger.of(context ).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('login failed ')),
       );
     }
@@ -125,23 +123,23 @@ class LoginController extends ChangeNotifier {
         googleUser = await googleSignIn.signIn();
       }
       if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
         final idToken = googleAuth.idToken;
 
         print("Google ID Token:");
         print(idToken);
 
         Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => HomeScreen()));
+            context, MaterialPageRoute(builder: (_) => HomeScreen()));
       }
     } catch (e) {
+      log(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Google Login Failed: $e")),
       );
     }
   }
-
 
   Future<void> facebookLogin(BuildContext context) async {
     try {
@@ -161,7 +159,9 @@ class LoginController extends ChangeNotifier {
           print('Welcome ${user.name}, Email: ${user.email}');
 
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Server Login Successful! Token: ${response.token}")),
+            SnackBar(
+                content:
+                    Text("Server Login Successful! Token: ${response.token}")),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -180,12 +180,11 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('auth_token', token);
   }
+
   Future<void> appleLogin(BuildContext context) async {
     try {
       final AuthorizationCredentialAppleID credential =

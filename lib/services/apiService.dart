@@ -1,8 +1,6 @@
 import 'dart:convert';
+
 import 'package:firebasewithnotification/model/postman_model.dart';
-import 'package:firebasewithnotification/view/screens/location_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,8 +29,8 @@ class ApiService {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        final token = data['Token'];
-        final userJson = data['User'];
+        final token = data['token'];
+        final userJson = data['user'];
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", token);
@@ -342,7 +340,7 @@ class ApiService {
       return _handleResponse<List<TopRatedItem>>(
         response: response,
         mapper: (data) {
-          final List itemsJson = data['topFood'];
+          final List itemsJson = data['data'];
           return itemsJson.map((json) => TopRatedItem.fromJson(json)).toList();
         },
         customErrorMessage: 'Failed to load top rated items',
@@ -481,7 +479,7 @@ class ApiService {
   }
 
   Future<Address?> addAddress({
-    required String  userId,
+    required String userId,
     required String addressLine,
     required String description,
     required String province,
@@ -547,7 +545,8 @@ class ApiService {
     } catch (e) {
       print("Exception: $e");
       throw Exception('Failed to load addresses');
-    }}
+    }
+  }
 
   Future<DeliveryTracking?> getDeliveryTracking({
     required int orderId,

@@ -262,18 +262,18 @@ class Offer {
 }
 
 class TopRatedItem {
-  final int id;
-  final int restaurantId;
-  final int categoryId;
-  final int itemOptionId;
-  final String nameAr;
-  final String nameEn;
-  final String descriptionAr;
-  final String descriptionEn;
-  final double price;
-  final String image;
-  final bool isAvailable;
-  final double rating;
+  final int? id;
+  final int? restaurantId;
+  final int? categoryId;
+  final int? itemOptionId;
+  final String? nameAr;
+  final String? nameEn;
+  final String? descriptionAr;
+  final String? descriptionEn;
+  final double? price;
+  final String? image;
+  final bool? isAvailable;
+  final double? rating;
 
   TopRatedItem({
     required this.id,
@@ -601,6 +601,3 @@ class OrderModel {
     );
   }
 }
-
-
-
