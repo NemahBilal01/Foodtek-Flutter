@@ -272,6 +272,20 @@ class FavoriteItem {
     };
   }
 }
+class FavoriteResponse {
+  final String message;
+
+  FavoriteResponse(
+      {required this.message}
+      );
+
+  factory FavoriteResponse.fromJson(Map<String, dynamic> json) {
+    return FavoriteResponse(
+      message: json['message'],
+    );
+  }
+}
+
 class FoodItem {
   final int id;
   final String nameAr;
@@ -370,6 +384,7 @@ class CartItem {
     );
   }
 }
+
 
 
 

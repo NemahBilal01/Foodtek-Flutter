@@ -259,10 +259,28 @@ void _showRemoveDialog(
                     width: 295,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {
-                        provider.toggleFavorite(pizza);
-                        Navigator.pop(context);
+                      onPressed: () async {
+                        try {
+                          final token = await AuthStorage.getToken();
+                          final favoriteId = pizza['id'];
+
+                          await ApiService.removeFromFavorites(
+                            favoriteId: favoriteId,
+                            token: token!,
+                          );
+
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(getLang(context, 'removed_successfully'))),
+                          );
+                        } catch (e) {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('${getLang(context, 'remove_failed')} : ${e.toString()}')),
+                          );
+                        }
                       },
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF25AE4B),
                         shape: RoundedRectangleBorder(

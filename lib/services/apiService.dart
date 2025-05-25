@@ -188,6 +188,30 @@ class ApiService {
     }
   }
 
+  static Future<FavoriteResponse> removeFromFavorites({
+    required int favoriteId,
+    required String token,
+  }) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$baseUrl${ApiEndpoints.favorites}/$favoriteId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      ).timeout(timeout);
+
+      return _handleResponse<FavoriteResponse>(
+        response: response,
+        mapper: (data) => FavoriteResponse.fromJson(data),
+        customErrorMessage: 'Failed to remove favorite',
+      );
+    } catch (e) {
+      throw ApiException(message: 'Failed to remove favorite: ${e.toString()}');
+    }
+  }
+
+
   static Future<List<T>> _fetchList<T>({
     required String endpoint,
     required String key,
