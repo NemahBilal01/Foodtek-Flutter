@@ -1,10 +1,8 @@
 import 'package:firebasewithnotification/controller/cart_provider.dart';
 import 'package:firebasewithnotification/controller/order_provider.dart';
 import 'package:firebasewithnotification/view/screens/add_card_screen.dart';
-import 'package:firebasewithnotification/view/screens/location_screen.dart';
 import 'package:firebasewithnotification/view/widget/common_layoutWithBottomNav.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/applocal.dart';
@@ -17,21 +15,18 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-
   late String selectedAddress;
   late String paymentMethod;
   late String cardType;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     selectedAddress = getLang(context, "address");
     paymentMethod = getLang(context, "payment_method");
     cardType = getLang(context, "card_type");
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +37,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Text(
+              Text(
                 getLang(context, "checkout"),
                 style: TextStyle(
                   fontFamily: "Inter",
@@ -110,7 +105,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         },
                       ),
                       title: Text(
-                       getLang(context, "address details"),
+                        getLang(context, "address details"),
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
@@ -224,7 +219,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                         ),
-
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Row(
@@ -235,10 +229,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 groupValue: paymentMethod,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
-                                fillColor: MaterialStateProperty.resolveWith<
-                                  Color
-                                >((Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
+                                fillColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  return states.contains(WidgetState.selected)
                                       ? Color(0xFF25AE4B)
                                       : Color(0xFFACACAC);
                                 }),
@@ -255,10 +249,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   letterSpacing: 0,
-                                  color:
-                                      paymentMethod == 'Card'
-                                          ? Color(0xFF0A0D13)
-                                          : Color(0xFFACACAC),
+                                  color: paymentMethod == 'Card'
+                                      ? Color(0xFF0A0D13)
+                                      : Color(0xFFACACAC),
                                 ),
                               ),
                               SizedBox(width: 7),
@@ -267,10 +260,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 groupValue: paymentMethod,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
-                                fillColor: MaterialStateProperty.resolveWith<
-                                  Color
-                                >((Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
+                                fillColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  return states.contains(WidgetState.selected)
                                       ? Color(0xFF25AE4B)
                                       : Color(0xFFACACAC);
                                 }),
@@ -287,10 +280,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   letterSpacing: 0,
-                                  color:
-                                      paymentMethod == 'Cash'
-                                          ? Color(0xFF0A0D13)
-                                          : Color(0xFFACACAC),
+                                  color: paymentMethod == 'Cash'
+                                      ? Color(0xFF0A0D13)
+                                      : Color(0xFFACACAC),
                                 ),
                               ),
                             ],
@@ -298,7 +290,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       ],
                     ),
-
                     SizedBox(height: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,7 +306,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                         ),
-
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Row(
@@ -326,10 +316,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 groupValue: cardType,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
-                                fillColor: MaterialStateProperty.resolveWith<
-                                  Color
-                                >((Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
+                                fillColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  return states.contains(WidgetState.selected)
                                       ? Color(0xFF25AE4B)
                                       : Color(0xFFACACAC);
                                 }),
@@ -347,10 +337,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 groupValue: cardType,
                                 activeColor: Color(0xFF25AE4B),
                                 visualDensity: VisualDensity(horizontal: -4.0),
-                                fillColor: MaterialStateProperty.resolveWith<
-                                  Color
-                                >((Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
+                                fillColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (Set<WidgetState> states) {
+                                  return states.contains(WidgetState.selected)
                                       ? Color(0xFF25AE4B)
                                       : Color(0xFFACACAC);
                                 }),
@@ -381,68 +371,69 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 }
 
 class OrderSummaryCard extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
     return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Color(0XFF25AE4B),
-        borderRadius: BorderRadius.circular(7),
-        image: DecorationImage(
-          image: AssetImage("images/Pattern (1).png"),
-          fit: BoxFit.cover,
-          opacity: 0.5,
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Color(0XFF25AE4B),
+          borderRadius: BorderRadius.circular(7),
+          image: DecorationImage(
+            image: AssetImage("images/Pattern (1).png"),
+            fit: BoxFit.cover,
+            opacity: 0.5,
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildPriceRow(getLang(context, 'Sub-Total'), '\$${cartProvider.getTotalPrice()}'),
-          _buildPriceRow(getLang(context, 'Delivery Charge'), '10 \$'),
-          _buildPriceRow(getLang(context, 'discount'), '10 \$'),
-          _buildPriceRow(getLang(context, 'Total:'), '\$${cartProvider.getTotalPrice() + 10 - 10}', isTotal: true),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildPriceRow(getLang(context, 'Sub-Total'),
+                '\$${cartProvider.getTotalPrice()}'),
+            _buildPriceRow(getLang(context, 'Delivery Charge'), '10 \$'),
+            _buildPriceRow(getLang(context, 'discount'), '10 \$'),
+            _buildPriceRow(getLang(context, 'Total:'),
+                '\$${cartProvider.getTotalPrice() + 10 - 10}',
+                isTotal: true),
+            SizedBox(height: 4),
+            SizedBox(
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    final cartProvider = context.read<CartProvider>();
+                    final orderProvider = context.read<OrderProvider>();
 
-          SizedBox(height: 4),
-          SizedBox(
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  final cartProvider = context.read<CartProvider>();
-                  final orderProvider = context.read<OrderProvider>();
-
-                  if (cartProvider.cartItems.isNotEmpty) {
-                    orderProvider.addOrder(cartProvider.cartItems, cartProvider.getTotalPrice());
-                    cartProvider.clearCart();
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddCardScreen()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.green,
-                  minimumSize: const Size(366.017, 57),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7),
+                    if (cartProvider.cartItems.isNotEmpty) {
+                      orderProvider.addOrder(
+                          cartProvider.cartItems, cartProvider.getTotalPrice());
+                      cartProvider.clearCart();
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddCardScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.green,
+                    minimumSize: const Size(366.017, 57),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7),
+                    ),
                   ),
-                ),
-                child:  Text(
-                  getLang(context, 'Place My Order'),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Color(0XFF25AE4B),
+                  child: Text(
+                    getLang(context, 'Place My Order'),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0XFF25AE4B),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ));
-
+          ],
+        ));
   }
 
   Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
@@ -554,5 +545,3 @@ Widget _buildPriceRow(String label, String price, {bool isTotal = false}) {
     ),
   );
 }
-
-

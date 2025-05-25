@@ -1,10 +1,8 @@
-import 'package:firebasewithnotification/view/screens/location_section1.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'food_selection_screen.dart';
-import 'location_screen.dart';
 import 'package:firebasewithnotification/components/applocal.dart';
+import 'package:firebasewithnotification/view/screens/location_section1.dart';
+import 'package:flutter/material.dart';
 
+import 'food_selection_screen.dart';
 
 class DeliveryScreen extends StatelessWidget {
   const DeliveryScreen({super.key});
@@ -25,14 +23,12 @@ class DeliveryScreen extends StatelessWidget {
               height: 300,
             ),
           ),
-
           Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 220),
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Image.asset(
@@ -41,11 +37,9 @@ class DeliveryScreen extends StatelessWidget {
                       height: 219,
                     ),
                   ),
-
                   SizedBox(height: 20),
-
                   Container(
-                    width: 335,
+                    // width: 335,
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +55,6 @@ class DeliveryScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           getLang(context, "order your favourite food"),
-
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
@@ -72,14 +65,13 @@ class DeliveryScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   SizedBox(height: 40),
-
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => FoodSelectionScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => FoodSelectionScreen()),
                       );
                     },
                     borderRadius: BorderRadius.circular(69),
@@ -107,10 +99,7 @@ class DeliveryScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 40),
-
-
                   Container(
                     width: 321,
                     height: 26,
@@ -121,7 +110,8 @@ class DeliveryScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => LocationSection()),
+                              MaterialPageRoute(
+                                  builder: (context) => LocationSection()),
                             );
                           },
                           child: Text(
@@ -133,30 +123,32 @@ class DeliveryScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Row(
                           children: [
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.green),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.green),
                             SizedBox(width: 8),
-                            CircleAvatar(radius: 6, backgroundColor: Colors.grey[300]),
+                            CircleAvatar(
+                                radius: 6, backgroundColor: Colors.grey[300]),
                           ],
                         ),
-
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => FoodSelectionScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => FoodSelectionScreen()),
                             );
                           },
-                          child: Icon(Icons.arrow_forward, size: 28, color: Colors.green),
+                          child: Icon(Icons.arrow_forward,
+                              size: 28, color: Colors.green),
                         ),
                       ],
                     ),
                   ),
-
                   SizedBox(height: 20),
                 ],
               ),

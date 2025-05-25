@@ -1,8 +1,7 @@
+import 'package:firebasewithnotification/components/applocal.dart';
 import 'package:firebasewithnotification/view/screens/login.dart';
-import 'package:firebasewithnotification/view/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:firebasewithnotification/components/applocal.dart';
 
 class LocationSection extends StatelessWidget {
   const LocationSection({super.key});
@@ -10,10 +9,8 @@ class LocationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
-
           Positioned(
             top: 0,
             left: 0,
@@ -25,28 +22,21 @@ class LocationSection extends StatelessWidget {
               height: 200,
             ),
           ),
-
-
           SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 220),
-
-
                 Image.asset('images/Take Away.png', width: 328.5, height: 219),
-
                 SizedBox(height: 20),
-
-
                 Container(
-                  width: 335,
-                  height: 158,
+                  // width: 335,
+                  // height: 158,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                      getLang(context, "turn on your location"),
+                        getLang(context, "turn on your location"),
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -55,7 +45,7 @@ class LocationSection extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                          getLang(context, "to continues location"),
+                        getLang(context, "to continues location"),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -66,9 +56,6 @@ class LocationSection extends StatelessWidget {
                     ],
                   ),
                 ),
-
-
-
                 InkWell(
                   onTap: () async {
                     try {
@@ -83,7 +70,9 @@ class LocationSection extends StatelessWidget {
                       print(" $e");
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Site permission must be granted to use this feature")),
+                        SnackBar(
+                            content: Text(
+                                "Site permission must be granted to use this feature")),
                       );
                     }
                   },
@@ -98,8 +87,9 @@ class LocationSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(69),
                     ),
                     child: Container(
-                      width:307 ,height:48 ,
-                      padding: EdgeInsets.only(top: 14,bottom: 14),
+                      width: 307,
+                      height: 48,
+                      padding: EdgeInsets.only(top: 14, bottom: 14),
                       alignment: Alignment.center,
                       child: Text(
                         getLang(context, "yes,turn it on"),
@@ -112,20 +102,17 @@ class LocationSection extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
-
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Login()));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Login()));
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(307, 48),
-                    padding: EdgeInsets.only(top: 14,bottom: 14),
+                    padding: EdgeInsets.only(top: 14, bottom: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(69),
                     ),
@@ -140,14 +127,15 @@ class LocationSection extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
-
-
               ],
-            ),),],),);
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
+
 Future<Position> _determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;
@@ -165,17 +153,14 @@ Future<Position> _determinePosition() async {
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-
       return Future.error('Location permissions are denied');
     }
   }
 
   if (permission == LocationPermission.deniedForever) {
-
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
-
 
   return await Geolocator.getCurrentPosition();
 }

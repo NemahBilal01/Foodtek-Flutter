@@ -6,13 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="be71452a-25e7-43a2-b148-01f59d4573d3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/login_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller/signup_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/signup_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controller/cart_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/cart_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controller/order_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/order_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/model/postman_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/postman_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/services/apiService.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/apiService.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view/screens/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/view/screens/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/cart_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/view/screens/checkout_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/checkout_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/view/screens/delivery_hero_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/delivery_hero_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/view/screens/history_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/history_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/view/screens/location_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view/screens/location_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,13 +64,26 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Dana__test&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Foodtek-Flutter&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Foodtek-Flutter/android/app/src/main/res/values&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Foodtek-Flutter\android\app\src\main\res\values" />
+      <recent name="C:\Users\Lenovo\Foodtek-Flutter\android\app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Foodtek-Flutter\images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
@@ -86,14 +101,21 @@
     </task>
     <servers />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/view/screens/pizza_category.dart</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
